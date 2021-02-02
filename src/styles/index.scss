@@ -8,4 +8,56 @@ body {
 .calendarBar {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.cell {
+  border: 1px solid #000;
+  min-width: 34px;
+
+  span {
+    display: block;
+
+    &.day {
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    &.date {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+}
+
+.weekend {
+  background: #f0f0f0;
+}
+
+.btn {
+  width: 40px;
+  height: 40px;
+}
+
+.prev-btn {
+  background: url(../img/leftArrow.png) no-repeat center;
+}
+
+.next-btn {
+  background: url(../img/rightArrow.png) no-repeat center;
+}
+
+.display-date {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  min-width: 120px;
 }
