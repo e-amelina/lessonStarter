@@ -1,3 +1,4 @@
+
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
   if(rendered) {
     appElement.childNodes[appElement.childNodes.length -1].innerText = '';
