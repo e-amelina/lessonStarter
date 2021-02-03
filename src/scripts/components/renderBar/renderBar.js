@@ -17,20 +17,13 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 function createButton (currentDate, emitter, increased) {
   const button = document.createElement("div");
   button.classList.add("btn");
-  if(increased) {
-    button.classList.add("next-btn");
-  }
-  if(!increased) {
-    button.classList.add("prev-btn");
-  }
+
+  increased ? button.classList.add("next-btn") : button.classList.add("prev-btn");
+  
   button.addEventListener("click", () => {
     const displayDate = document.querySelector(".display-date");
-    if(increased) {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-    }
-    if(!increased) {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-    }
+
+    increased ? currentDate.setMonth(currentDate.getMonth() + 1):currentDate.setMonth(currentDate.getMonth() - 1);
     
     if(displayDate) {
       displayDate.innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
