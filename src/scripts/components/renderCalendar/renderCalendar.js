@@ -1,14 +1,15 @@
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
   if(rendered) {
-    appElement.innerText = '';
+    appElement.childNodes[appElement.childNodes.length -1].innerText = '';
   } 
-    const calendarContainer = document.createElement("table");
-    const calendarHead = document.createElement("thead");
-    calendarHead.append(createHeader(currentDate));
-    const calendarBody = document.createElement("tbody");
-    calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
-    calendarContainer.append(calendarBody); // This element must contain tr > td*monthLength
-    appElement.append(calendarContainer);
+
+  const calendarContainer = document.createElement("table");
+  const calendarHead = document.createElement("thead");
+  calendarHead.append(createHeader(currentDate));
+  const calendarBody = document.createElement("tbody");
+  calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
+  calendarContainer.append(calendarBody); // This element must contain tr > td*monthLength
+  appElement.append(calendarContainer);
     // let currentDate = new Date();
 };
 
@@ -31,7 +32,7 @@ function createHeader(currentDate) {
     const contentCellDay = document.createElement("span");
     contentCellDay.classList.add("day");
     contentCellDay.innerText = daysOfWeek[date.getDay()];
-    if(date.getDay()=== 0 || date.getDay() === 6) {
+    if(date.getDay() === 0 || date.getDay() === 6) {
       cell.classList.add("weekend");
     }
     cell.append(contentCellDay);

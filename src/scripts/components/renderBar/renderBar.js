@@ -1,34 +1,28 @@
-const renderBar = ({ appElement, currentDate, emitter}) => {
+export const renderBar = ({ appElement, currentDate, pickCurrentDate}) => {
 
   const calendarToolbar = document.createElement("div");
-  calendarToolbar.prepend(createButton(currentDate, emitter, false));
+  calendarToolbar.prepend(createButton(pickCurrentDate, false));
   calendarToolbar.append(createDisplay(currentDate.getMonth(), currentDate.getFullYear()));
-  calendarToolbar.append(createButton(currentDate, emitter, true));  
+  calendarToolbar.append(createButton(pickCurrentDate, true));  
   
   calendarToolbar.classList.add("calendarBar"); // Add class example
   // here toolBar content rendering
   appElement.prepend(calendarToolbar);
 };
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
+export const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"];
 
 
-function createButton (currentDate, emitter, increased) {
+function createButton (pickCurrentDate, increased) {
   const button = document.createElement("div");
   button.classList.add("btn");
 
   increased ? button.classList.add("next-btn") : button.classList.add("prev-btn");
-  
-  button.addEventListener("click", () => {
-    const displayDate = document.querySelector(".display-date");
 
-    increased ? currentDate.setMonth(currentDate.getMonth() + 1):currentDate.setMonth(currentDate.getMonth() - 1);
-    
-    if(displayDate) {
-      displayDate.innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-      emitter.emit('event:date-changed', currentDate);
-    }
+  button.addEventListener("click", () => {
+    button.classList.add('active');
+    pickCurrentDate();
   });
 
   return button;
@@ -44,4 +38,5 @@ function createDisplay(month, year) {
 }
 
 
-export default renderBar;
+// export default renderBar;
+

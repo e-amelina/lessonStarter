@@ -1,22 +1,37 @@
-import renderBar from "../renderBar";
+import { renderBar, monthNames } from "../renderBar";
 import renderCalendar from "../renderCalendar";
-import EventEmitter from "events";
+
+// const monthNames = ["January", "February", "March", "April", "May", "June",
+// "July", "August", "September", "October", "November", "December"];
 
 const renderApp = () => {
   const appElement = document.getElementById("appRoot");
-  const currentDate = new Date(); 
-  const emitter = new EventEmitter();
- 
-  emitter.on('event:date-changed', date => {
-    let rendered = false;
+  let currentDate = new Date(); 
+  let rendered = false;
+
+  renderCalendar({ appElement, currentDate, rendered });
+  renderBar({ appElement, currentDate, pickCurrentDate });
+  
+  function pickCurrentDate () {
+
     if(appElement.childNodes.length) {
       rendered = true;
     } 
-    renderCalendar({ appElement, currentDate: date, rendered });
-    renderBar({ appElement, currentDate: date, emitter });
-  });
-  
-  emitter.emit('event:date-changed', currentDate);
+
+    const displayDate = document.querySelector(".display-date");
+    const button = document.querySelector('.active');
+    let increased = button.classList.contains('next-btn');
+
+    increased ? currentDate.setMonth(currentDate.getMonth() + 1) : currentDate.setMonth(currentDate.getMonth() - 1);
+
+    button.classList.remove('active');
+    
+    if(displayDate) {
+      displayDate.innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    }
+
+    renderCalendar({ appElement, currentDate, rendered });
+  }
 
 };
 
