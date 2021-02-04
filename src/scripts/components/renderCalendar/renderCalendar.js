@@ -27,6 +27,9 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
     for (let i = 0; i < departmentTeams.teams.length; i++) {
       for (let j = 0; j < departmentTeams.teams[i].members.length + rowsForHeaderSection; j++) {
         const row = calendarBody.insertRow();
+        if (j == departmentTeams.teams[i].members.length + rowsForHeaderSection - 1) {
+          row.classList.add('last');
+        }
         for (let k = 0; k < countDays; k++) {
           const cell = document.createElement("td");
           cell.classList.add("cell");

@@ -62,8 +62,8 @@ table {
   min-width: 120px;
 }
 
-// tbody::after {
+// .last ::before{
 //   content: '';
-//   display: block;
+//   display: table-row;
 //   height: 33px;
 // }
