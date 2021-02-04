@@ -1,3 +1,7 @@
+import {departmentTeams} from '../API/index';
+
+console.log(departmentTeams);
+
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
   if(rendered) {
@@ -7,11 +11,29 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   const calendarContainer = document.createElement("table");
   const calendarHead = document.createElement("thead");
   calendarHead.append(createHeader(currentDate));
-  const calendarBody = document.createElement("tbody");
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
-  calendarContainer.append(calendarBody); // This element must contain tr > td*monthLength
+  // calendarContainer.append(calendarBody); // This element must contain tr > td*monthLength
   appElement.append(calendarContainer);
     // let currentDate = new Date();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    const countDays = getDaysInMonth(month, year);
+  
+    for (let i = 0; i < departmentTeams.teams.length; i++) {
+      const calendarBody = document.createElement("tbody");
+      calendarContainer.append(calendarBody);
+      for (let j = 0; j < departmentTeams.teams[i].members.length; j++) {
+        const row = calendarBody.insertRow();
+        for (let k = 0; k < countDays; k++) {
+          const cell = document.createElement("td");
+          cell.classList.add("cell");
+  
+          row.append(cell);
+          row.style.height = '33px';
+        }  
+      }  
+
+    }
 };
 
 export default renderCalendar;
