@@ -18,6 +18,20 @@ table {
   thead {
     tr {
       height: 64px;
+
+      th {
+        &.cell:hover {
+          background: #fff;
+        }
+
+        &.weekend:hover {
+          background: #f0f0f0;
+        }
+
+        &.cell-sum:hover {
+          background: #f3f3f3;
+        }
+      }
     }
   }
 }
@@ -78,7 +92,18 @@ table {
     border-left: none;
 
     &:hover {
+      cursor: default;
       background: #fff;
+    }
+  }
+
+  &-sum {
+    font-weight: normal;
+    font-size: 12px;
+    background: #f3f3f3;
+
+    &:hover {
+      background: #f3f3f3;
     }
   }
 }
@@ -122,10 +147,18 @@ table {
 
 .teem {
   min-width: 260px;
+  padding: 0 20px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+
+  &__name {
+    font-weight: 600;
+  }
 
   &__info {
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
   }
 
@@ -134,6 +167,7 @@ table {
     font-size: 12px;
     line-height: 18px;
     color: #949494;
+    margin-left: auto;
 
     &::before {
       content: "";
