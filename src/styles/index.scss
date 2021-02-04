@@ -64,6 +64,7 @@ table {
     top: 0;
     left: 0;
     cursor: pointer;
+    transition: color 0.5s;
 
     &:hover {
       background: #fff;
@@ -98,6 +99,7 @@ table {
 .btn {
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 
 .prev-btn {
@@ -159,8 +161,21 @@ table {
     height: 20px;
   }
 }
+
 // tbody::after {
 //   content: '';
 //   display: block;
 //   height: 33px;
 // }
+.modal {
+  background-color: red;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
+}
+
+.modal-of {
+  display: none;
+}

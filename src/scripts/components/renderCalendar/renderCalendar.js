@@ -1,18 +1,15 @@
 import {departmentTeams} from '../API';
 
-console.log(departmentTeams);
 
-
-const renderCalendar = ({ appElement, currentDate, rendered }) => {
+const renderCalendar = ({appElement, currentDate, rendered}) => {
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const countDays = getDaysInMonth(month, year);
 
-  if(rendered) {
+  if (rendered) {
     appElement.removeChild(appElement.lastChild);
-  } 
-
+  }
   const calendarContainer = document.createElement("table");
   const calendarHead = document.createElement("thead");
   calendarHead.append(createTableHeader(currentDate));
@@ -22,6 +19,9 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
   appElement.append(calendarContainer);
 };
+const stateShowModal = {
+  show: false
+};
 
 const rowsForHeaderSection = 1;
 
@@ -29,14 +29,29 @@ const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St'];
 
 function createTableHeader(currentDate) {
   const row = document.createElement("tr");
-
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const countDays = getDaysInMonth(month, year);
   const button = document.createElement("BUTTON");
+  button.addEventListener('click', () => {
+    stateShowModal.show = !stateShowModal.show;
+    stateShowModal.show ? modal.classList.add("modal-of") : modal.classList.remove("modal-of");
+  });
   button.innerHTML = "&#10011; Add Vacation";
-
-  for(let i = 0; i <= countDays; i++) {
+  const modal = document.createElement('div');
+  modal.innerHTML = (`
+  <form>
+  
+    </form>
+    
+</section>
+ 
+  
+  
+  `);
+  modal.classList.add("modal");
+  document.body.append(modal);
+  for (let i = 0; i <= countDays; i++) {
     // if(i === 0) {
     //   //create button ????
 
@@ -44,7 +59,7 @@ function createTableHeader(currentDate) {
     const date = new Date(year, month, i);
     const cell = document.createElement("th");
     cell.classList.add("cell");
-    if(i === 0) {
+    if (i === 0) {
       //create button
       cell.appendChild(button);
       cell.classList.add("cell-button");
@@ -52,7 +67,7 @@ function createTableHeader(currentDate) {
       const contentCellDay = document.createElement("span");
       contentCellDay.classList.add("day");
       contentCellDay.innerText = daysOfWeek[date.getDay()];
-      if(isWeekend(date)) {
+      if (isWeekend(date)) {
         cell.classList.add("weekend");
       }
       cell.append(contentCellDay);
@@ -64,7 +79,7 @@ function createTableHeader(currentDate) {
     }
 
     row.append(cell);
-    
+
   }
 
   return row;
@@ -75,7 +90,7 @@ function createTableBody(root, teemsData, countDays, month, year) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
 
-      if(j === 0 ) {
+      if (j === 0) {
         row.classList.add("department");
       }
 
@@ -83,10 +98,10 @@ function createTableBody(root, teemsData, countDays, month, year) {
         const cell = document.createElement("td");
         cell.classList.add("cell");
 
-        if(k === 0) {
+        if (k === 0) {
           cell.classList.add("teem");
 
-          if(j === 0 ) {
+          if (j === 0) {
             const wrap = document.createElement("div");
             wrap.classList.add("teem__info");
 
@@ -94,7 +109,7 @@ function createTableBody(root, teemsData, countDays, month, year) {
             teemName.classList.add("teem__name");
             teemName.innerText = teemsData.teams[i].name;
             wrap.append(teemName);
-            
+
             const countMembersTeem = document.createElement("span");
             countMembersTeem.classList.add("teem__count-members");
             countMembersTeem.innerText = teemsData.teams[i].members.length;
@@ -110,38 +125,37 @@ function createTableBody(root, teemsData, countDays, month, year) {
             hideMembers.addEventListener("click", () => {
               //hide group
             });
-            
+
             wrap.append(hideMembers);
 
             cell.append(wrap);
 
           } else {
-            cell.innerText = teemsData.teams[i].members[j-1].name;
+            cell.innerText = teemsData.teams[i].members[j - 1].name;
           }
 
         } else {
           const date = new Date(year, month, k);
 
-          if(isWeekend(date)) {
+          if (isWeekend(date)) {
             cell.classList.add("weekend");
           }
         }
         row.append(cell);
-      }  
-    }  
+      }
+    }
   }
 
   return root;
 }
 
 
-
 function getDaysInMonth(month, year) {
   return new Date(year, month + 1, 0).getDate();
 }
 
-function isWeekend (date) {
-  if(date.getDay() === 0 || date.getDay() === 6) {
+function isWeekend(date) {
+  if (date.getDay() === 0 || date.getDay() === 6) {
 
     return true;
   }
