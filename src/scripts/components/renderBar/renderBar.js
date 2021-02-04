@@ -38,5 +38,3 @@ function createDisplay(month, year) {
 }
 
 
-// export default renderBar;
-
