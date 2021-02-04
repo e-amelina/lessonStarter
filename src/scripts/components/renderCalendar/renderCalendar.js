@@ -18,7 +18,7 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   calendarHead.append(createHeader(currentDate));
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
   const calendarBody = document.createElement("tbody");
-  calendarContainer.append(createBody(calendarBody, countDays));
+  calendarContainer.append(createBody(calendarBody, countDays, month, year));
 
   appElement.append(calendarContainer);
 };
@@ -42,7 +42,7 @@ function createHeader(currentDate) {
     const contentCellDay = document.createElement("span");
     contentCellDay.classList.add("day");
     contentCellDay.innerText = daysOfWeek[date.getDay()];
-    if(date.getDay() === 0 || date.getDay() === 6) {
+    if(isWeekend(date)) {
       cell.classList.add("weekend");
     }
     cell.append(contentCellDay);
@@ -59,13 +59,18 @@ function createHeader(currentDate) {
   return row;
 }
 
-function createBody(root, countDays) {
+function createBody(root, countDays, month, year) {
   for (let i = 0; i < departmentTeams.teams.length; i++) {
     for (let j = 0; j < departmentTeams.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
       for (let k = 0; k < countDays; k++) {
+        const date = new Date(year, month, k+1);
+
         const cell = document.createElement("td");
         cell.classList.add("cell");
+        if(isWeekend(date)) {
+          cell.classList.add("weekend");
+        }
         row.append(cell);
         row.style.height = '33px';
       }  
@@ -79,5 +84,14 @@ function getDaysInMonth(month, year) {
   return new Date(year, month + 1, 0).getDate();
 }
 
+
+function isWeekend (date) {
+  if(date.getDay() === 0 || date.getDay() === 6) {
+
+    return true;
+  }
+
+  return false;
+}
 
 export default renderCalendar;

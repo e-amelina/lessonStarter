@@ -5,8 +5,7 @@ export const renderBar = ({ appElement, currentDate, pickCurrentDate}) => {
   calendarToolbar.append(createDisplay(currentDate.getMonth(), currentDate.getFullYear()));
   calendarToolbar.append(createButton(pickCurrentDate, true));  
   
-  calendarToolbar.classList.add("calendarBar"); // Add class example
-  // here toolBar content rendering
+  calendarToolbar.classList.add("calendarBar"); 
   appElement.prepend(calendarToolbar);
 };
 
