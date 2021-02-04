@@ -76,6 +76,10 @@ table {
     position: relative;
     border-top: none;
     border-left: none;
+
+    &:hover {
+      background: #fff;
+    }
   }
 }
 
