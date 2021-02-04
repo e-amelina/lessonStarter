@@ -17,8 +17,9 @@ table {
 }
 
 .cell {
-  border: 1px solid #000;
-  min-width: 34px;
+  border: 1px solid rgba(126, 126, 126, 0.3);
+  width: 34px;
+  height: 33px;
 
   span {
     display: block;
@@ -35,6 +36,18 @@ table {
       line-height: 21px;
     }
   }
+}
+
+.department {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  background: rgba(155, 153, 255, 0.1);
+}
+
+.teems {
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .weekend {
@@ -62,6 +75,49 @@ table {
   min-width: 120px;
 }
 
+.teem {
+  min-width: 260px;
+
+  &__info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  &__count-members {
+    width: 50px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #949494;
+
+    &::before {
+      content: "";
+      width: 20px;
+      display: inline-block;
+      background-image: url(http://localhost:8080/js/../src/assets/img/groups.svg);
+      height: 15px;
+      background-size: 20px 20px;
+      opacity: 0.6;
+      background-repeat: no-repeat;
+      padding-left: 3px;
+    }
+  }
+
+  &__percentage-absent {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 1px 2px;
+    color: #fff;
+    background: #9b99ff;
+    border-radius: 2px;
+  }
+
+  &__btn--hide {
+    background-image: url(../assets/img/arrowUp.svg);
+    width: 20px;
+    height: 20px;
+  }
+}
 // tbody::after {
 //   content: '';
 //   display: block;
