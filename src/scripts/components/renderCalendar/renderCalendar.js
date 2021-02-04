@@ -33,17 +33,21 @@ function createTableHeader(currentDate) {
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const countDays = getDaysInMonth(month, year);
+  const button = document.createElement("BUTTON");
+  button.innerHTML = "&#10011; Add Vacation";
 
   for(let i = 0; i <= countDays; i++) {
-    if(i === 0) {
-      //create button
-    }
+    // if(i === 0) {
+    //   //create button ????
+
+    // }
     const date = new Date(year, month, i);
     const cell = document.createElement("th");
     cell.classList.add("cell");
     if(i === 0) {
       //create button
-      cell.innerText = "button";
+      cell.appendChild(button);
+      cell.classList.add("cell-button");
     } else {
       const contentCellDay = document.createElement("span");
       contentCellDay.classList.add("day");
