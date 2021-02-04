@@ -41,13 +41,7 @@ function createTableHeader(currentDate) {
   const modal = document.createElement('div');
   modal.innerHTML = (`
   <form>
-  
-    </form>
-    
-</section>
- 
-  
-  
+  </form>  
   `);
   modal.classList.add("modal");
   document.body.append(modal);
