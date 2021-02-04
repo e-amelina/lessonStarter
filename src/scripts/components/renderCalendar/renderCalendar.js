@@ -31,18 +31,22 @@ function createTableHeader(currentDate) {
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
   const countDays = getDaysInMonth(month, year);
+  const button = document.createElement("BUTTON");
+  button.innerHTML = "&#10011; Add Vacation";
 
-  for(let i = 0; i <= countDays; i++) {
-    if(i === 0) {
-      //create button
-    }
+  for(let i = 0; i <= countDays + 1; i++) {
+    // if(i === 0) {
+    //   //create button ????
+
+    // }
     const date = new Date(year, month, i);
     const cell = document.createElement("th");
     cell.classList.add("cell");
     if(i === 0) {
       //create button
-      cell.innerText = "button";
-    } else {
+      cell.appendChild(button);
+      cell.classList.add("cell-button");
+    } else if (i !== (countDays + 1)) {
       const contentCellDay = document.createElement("span");
       contentCellDay.classList.add("day");
       contentCellDay.innerText = daysOfWeek[date.getDay()];
@@ -55,6 +59,9 @@ function createTableHeader(currentDate) {
       contentCellNumberDay.classList.add("date");
       contentCellNumberDay.innerText = date.getDate();
       cell.append(contentCellNumberDay);
+    } else {
+      cell.innerText = 'Sum';
+      cell.classList.add("cell-sum");
     }
 
     row.append(cell);
@@ -76,7 +83,7 @@ function createTableBody(root, teemsData, countDays, month, year) {
         row.classList.add("last-row");
       }
 
-      for (let k = 0; k <= countDays; k++) {
+      for (let k = 0; k <= countDays + 1; k++) {
         const cell = document.createElement("td");
         cell.classList.add("cell");
 
@@ -115,6 +122,9 @@ function createTableBody(root, teemsData, countDays, month, year) {
           } else {
             cell.innerText = teemsData.teams[i].members[j-1].name;
           }
+          
+        } else if (k === countDays + 1){
+          cell.classList.add("cell-sum");
 
         } else {
           const date = new Date(year, month, k);

@@ -14,12 +14,39 @@ body {
 table {
   border-collapse: collapse;
   margin: 0 auto;
+
+  thead {
+    tr {
+      height: 64px;
+
+      th {
+        &.cell:hover {
+          background: #fff;
+        }
+
+        &.weekend:hover {
+          background: #f0f0f0;
+        }
+
+        &.cell-sum:hover {
+          background: #f3f3f3;
+        }
+      }
+    }
+  }
 }
 
 .cell {
   border: 1px solid rgba(126, 126, 126, 0.3);
   width: 34px;
   height: 33px;
+
+  &:hover {
+    background: rgba(155, 153, 255, 0.1);
+    box-sizing: border-box;
+    border-radius: 2px;
+    cursor: pointer;
+  }
 
   span {
     display: block;
@@ -34,6 +61,49 @@ table {
       font-weight: 600;
       font-size: 14px;
       line-height: 21px;
+    }
+  }
+
+  button {
+    background: #48ba46;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    width: 145px;
+    height: 40px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+
+    &:hover {
+      background: #fff;
+      color: #48ba46;
+      border: 1px solid rgba(126, 126, 126, 0.3);
+    }
+  }
+
+  &-button {
+    position: relative;
+    border-top: none;
+    border-left: none;
+
+    &:hover {
+      cursor: default;
+      background: #fff;
+    }
+  }
+
+  &-sum {
+    font-weight: normal;
+    font-size: 12px;
+    background: #f3f3f3;
+
+    &:hover {
+      background: #f3f3f3;
     }
   }
 }
@@ -78,10 +148,18 @@ table {
 // .last::before {
 .teem {
   min-width: 260px;
+  padding: 0 20px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+
+  &__name {
+    font-weight: 600;
+  }
 
   &__info {
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
   }
 
@@ -90,6 +168,7 @@ table {
     font-size: 12px;
     line-height: 18px;
     color: #949494;
+    margin-left: auto;
 
     &::before {
       content: "";
