@@ -72,6 +72,9 @@ function createTableBody(root, teemsData, countDays, month, year) {
       if(j === 0 ) {
         row.classList.add("department");
       }
+      if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
+        row.classList.add("last-row");
+      }
 
       for (let k = 0; k <= countDays; k++) {
         const cell = document.createElement("td");

@@ -75,9 +75,7 @@ table {
   min-width: 120px;
 }
 
-<<<<<<< HEAD
 // .last::before {
-=======
 .teem {
   min-width: 260px;
 
@@ -122,8 +120,14 @@ table {
   }
 }
 // tbody::after {
->>>>>>> origin/vacation_reporter_features
 //   content: '';
 //   display: block;
 //   height: 33px;
+// }
+// .last-row{
+//   display:table-row-group;
+// }
+// .last-row::before{
+//   content: " ";
+//   width: 33px;
 // }
