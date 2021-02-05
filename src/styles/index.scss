@@ -202,3 +202,31 @@ table {
 //   display: block;
 //   height: 33px;
 // }
+// .last-row{
+//   display:table-row-group;
+// }
+// 
+// .last-row::after{
+//   content: " ";
+//   display: block;
+//   position: absolute;
+//   height: 50px;
+//   width: 100%;
+//   bottom: 0;
+//   left: 0;
+// }
+
+// tr{
+//   transform: translateY(0px);
+// position: relative;
+// }
+// .department::before {
+//   content: "";
+//   display: block;
+//   // position: absolute;
+//   height: 10px;
+//   width: 100%;
+//   bottom: 0;
+//   left: 0;
+//   background-color: #000;
+//   }

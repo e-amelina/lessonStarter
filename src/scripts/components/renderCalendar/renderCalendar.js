@@ -1,7 +1,5 @@
 import {departmentTeams} from '../API';
 
-console.log(departmentTeams);
-
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
@@ -80,6 +78,9 @@ function createTableBody(root, teemsData, countDays, month, year) {
 
       if(j === 0 ) {
         row.classList.add("department");
+      }
+      if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
+        row.classList.add("last-row");
       }
 
       for (let k = 0; k <= countDays + 1; k++) {
