@@ -44,13 +44,22 @@ export const departmentTeams = {
   };
 
 
-fetch("https://jsonplaceholder.typicode.com/posts/1", {
-  method: "PUT",
-  body: JSON.stringify(departmentTeams),
-  headers: {
-    "Content-type": "application/json; charset=UTF-8",
-  },
-})
-  .then((response) => response.json())
-  .then((json) => console.log(json));
+  export const users = [];
+  const showUsers = 2;
+  
+  const pushToUsers = (user)=> users.push(user);
+  
+  const url = 'https://jsonplaceholder.typicode.com/posts/';
+  
+  for(let userId = 1; userId <= showUsers; userId++){
+    fetch(`${url}${userId}`, {
+      method: "PUT",
+      body: JSON.stringify(departmentTeams.teams[userId - 1]),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).then(response => response.json())
+      .then (data => pushToUsers(data));
+  }
+  
 

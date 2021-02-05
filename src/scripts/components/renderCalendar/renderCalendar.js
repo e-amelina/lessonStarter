@@ -1,5 +1,7 @@
 import {departmentTeams} from '../API';
+import {users} from '../API';
 
+console.log(users);
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
