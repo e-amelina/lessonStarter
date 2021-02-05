@@ -145,7 +145,6 @@ table {
   min-width: 120px;
 }
 
-// .last::before {
 .teem {
   min-width: 260px;
   padding: 0 20px;
@@ -206,7 +205,28 @@ table {
 // .last-row{
 //   display:table-row-group;
 // }
-// .last-row::before{
+// 
+// .last-row::after{
 //   content: " ";
-//   width: 33px;
+//   display: block;
+//   position: absolute;
+//   height: 50px;
+//   width: 100%;
+//   bottom: 0;
+//   left: 0;
 // }
+
+// tr{
+//   transform: translateY(0px);
+// position: relative;
+// }
+// .department::before {
+//   content: "";
+//   display: block;
+//   // position: absolute;
+//   height: 10px;
+//   width: 100%;
+//   bottom: 0;
+//   left: 0;
+//   background-color: #000;
+//   }
