@@ -174,6 +174,24 @@ table {
   position: absolute;
   top: calc(50% - 100px);
   left: calc(50% - 100px);
+
+  &__btn-cancel {
+    padding: 10px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+  &__btn-send {
+    padding: 10px;
+    width: 100px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
 }
 
 .modal-of {

@@ -20,7 +20,7 @@ const renderCalendar = ({appElement, currentDate, rendered}) => {
   appElement.append(calendarContainer);
 };
 const stateShowModal = {
-  show: false
+  show: true
 };
 
 const rowsForHeaderSection = 1;
@@ -56,10 +56,11 @@ function createTableHeader(currentDate) {
           <option>Пункт 2</option>
         </select>
         <hr>
-        <button>Cancel</button>
-        <button>Send</button>
+        <button class="modal__btn-cancel">Cancel</button>
+        <button class="modal__btn-send">Send</button>
     </form> 
   `);
+  modal.classList.add("modal-of");
   modal.classList.add("modal");
   document.body.append(modal);
   for (let i = 0; i <= countDays; i++) {
