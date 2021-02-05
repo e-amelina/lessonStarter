@@ -40,8 +40,25 @@ function createTableHeader(currentDate) {
   button.innerHTML = "&#10011; Add Vacation";
   const modal = document.createElement('div');
   modal.innerHTML = (`
-  <form>
-  </form>  
+  <form action="" >
+        <div class="headerModal">
+            <h2>Vacation Request</h2>
+            <span>8 Days</span>
+        </div>
+        <span>Dates</span>
+        <div class="modal__inputs">
+        <input type="date" placeholder="from">
+        <input type="date" placeholder="to">
+        </div>
+        <p>Vac Type</p>
+        <select>
+          <option>Paid Day Off (PD)</option>
+          <option>Пункт 2</option>
+        </select>
+        <hr>
+        <button>Cancel</button>
+        <button>Send</button>
+    </form> 
   `);
   modal.classList.add("modal");
   document.body.append(modal);

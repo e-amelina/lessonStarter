@@ -168,8 +168,8 @@ table {
 //   height: 33px;
 // }
 .modal {
-  background-color: red;
-  width: 200px;
+  background-color: #fff;
+  width: 300px;
   height: 200px;
   position: absolute;
   top: calc(50% - 100px);
@@ -178,4 +178,21 @@ table {
 
 .modal-of {
   display: none;
+}
+
+.headerModal {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #eaeaea;
+
+  & h2 {
+    font-size: 10px;
+  }
+}
+
+.modal__inputs {
+  & input {
+    width: 140px;
+  }
 }
