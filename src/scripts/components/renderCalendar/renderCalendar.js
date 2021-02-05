@@ -17,6 +17,7 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
   const calendarBody = document.createElement("tbody");
   calendarContainer.append(createTableBody(calendarBody, departmentTeams, countDays, month, year));
+  // calendarContainer.append(hideMembers(departmentTeams));
 
   appElement.append(calendarContainer);
 };
@@ -112,7 +113,11 @@ function createTableBody(root, teemsData, countDays, month, year) {
             const hideMembers = document.createElement("span");
             hideMembers.classList.add("teem__btn--hide");
             hideMembers.addEventListener("click", () => {
-              //hide group
+              if(hideMembers.parentNode.parentElement.classList.contains('close')){
+                hideMembers.parentNode.parentElement.classList.remove('close');
+              }else{
+                hideMembers.parentNode.parentElement.classList.add('close');
+              }
             });
             
             wrap.append(hideMembers);
@@ -155,5 +160,17 @@ function isWeekend (date) {
 
   return false;
 }
+
+// function hideMembers(teemsData) {
+//   for (let i = 0; i < teemsData.teams.length; i++) {
+//     teemsData.teams[i].toggleComponent();
+//   }
+//   // if (teemsData.target.classList.contains("rotate-block")) {
+//   //   teemsData.target.classList.remove("rotate-block");
+//   // } else {
+//   //   teemsData.target.classList.add("rotate-block");
+//   // }
+// }
+
 
 export default renderCalendar;
