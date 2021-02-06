@@ -18,6 +18,20 @@ table {
   thead {
     tr {
       height: 64px;
+
+      th {
+        &.cell:hover {
+          background: #fff;
+        }
+
+        &.weekend:hover {
+          background: #f0f0f0;
+        }
+
+        &.cell-sum:hover {
+          background: #f3f3f3;
+        }
+      }
     }
   }
 }
@@ -64,7 +78,6 @@ table {
     top: 0;
     left: 0;
     cursor: pointer;
-    transition: color 0.5s;
 
     &:hover {
       background: #fff;
@@ -77,14 +90,39 @@ table {
     position: relative;
     border-top: none;
     border-left: none;
+
+    &:hover {
+      cursor: default;
+      background: #fff;
+    }
+  }
+
+  &-sum {
+    font-weight: normal;
+    font-size: 12px;
+    background: #f3f3f3;
+
+    &:hover {
+      background: #f3f3f3;
+    }
   }
 }
 
-.department {
+tr.department{
   font-weight: 600;
   font-size: 12px;
   line-height: 17px;
   background: rgba(155, 153, 255, 0.1);
+
+  &:not(:first-child)::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    height: 17px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+    width: calc(100% - 16px);
+    left: 8px;
+  }
 }
 
 .teems {
@@ -99,7 +137,6 @@ table {
 .btn {
   width: 40px;
   height: 40px;
-  cursor: pointer;
 }
 
 .prev-btn {
@@ -120,10 +157,18 @@ table {
 
 .teem {
   min-width: 260px;
+  padding: 0 20px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+
+  &__name {
+    font-weight: 600;
+  }
 
   &__info {
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
   }
 
@@ -132,6 +177,7 @@ table {
     font-size: 12px;
     line-height: 18px;
     color: #949494;
+    margin-left: auto;
 
     &::before {
       content: "";
@@ -161,56 +207,41 @@ table {
     height: 20px;
   }
 }
-
 // tbody::after {
 //   content: '';
 //   display: block;
 //   height: 33px;
 // }
-.modal {
-  background-color: #fff;
-  width: 300px;
-  height: 200px;
-  position: absolute;
-  top: calc(50% - 100px);
-  left: calc(50% - 100px);
-
-  &__btn-cancel {
-    padding: 10px;
-    width: 100px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.last-row {
+  // display:table-row-group;
+  .cell {
+    border-bottom: 33px solid #fff;
 
   }
-  &__btn-send {
-    padding: 10px;
-    width: 100px;
-    background-color: green;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    height: 34px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.3);;
+    width: calc(100% - 16px);
+    left: 8px;
   }
+  
 }
 
-.modal-of {
-  display: none;
-}
-
-.headerModal {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #eaeaea;
-
-  & h2 {
-    font-size: 10px;
-  }
-}
-
-.modal__inputs {
-  & input {
-    width: 140px;
-  }
-}
+// tr{
+//   transform: translateY(0px);
+// position: relative;
+// }
+// .department::before {
+//   content: "";
+//   display: block;
+//   // position: absolute;
+//   height: 10px;
+//   width: 100%;
+//   bottom: 0;
+//   left: 0;
+//   background-color: #000;
+//   }
