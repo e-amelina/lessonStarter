@@ -1,1 +1,1 @@
-export { default } from "./renderCalendar";
+export { default, createTableBody } from "./renderCalendar";

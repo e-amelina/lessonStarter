@@ -1,4 +1,8 @@
-import {departmentTeams} from '../API';
+// import {departmentTeams} from '../API';
+import {getUsersFromServer} from '../API';
+
+// let users = getUsersFromServer();
+// console.log(te);
 
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
@@ -16,7 +20,9 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   calendarHead.append(createTableHeader(currentDate));
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
   const calendarBody = document.createElement("tbody");
-  calendarContainer.append(createTableBody(calendarBody, departmentTeams, countDays, month, year));
+  getUsersFromServer().then(data =>
+  calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year)));
+  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer);
 
   appElement.append(calendarContainer);
 };
@@ -71,7 +77,8 @@ function createTableHeader(currentDate) {
   return row;
 }
 
-function createTableBody(root, teemsData, countDays, month, year) {
+export function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
+  console.log(teemsData.teams[0].name); // данные с сервера
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
@@ -89,6 +96,8 @@ function createTableBody(root, teemsData, countDays, month, year) {
 
         if(k === 0) {
           cell.classList.add("teem");
+          // РАБОТА С ДАННЫМИ С СЕРВЕРА
+          // cell.innerText = teemsData.teams[0].name;
 
           if(j === 0 ) {
             const wrap = document.createElement("div");
@@ -138,10 +147,9 @@ function createTableBody(root, teemsData, countDays, month, year) {
     }  
   }
 
+  // calendarContainer.append(root);
   return root;
 }
-
-
 
 function getDaysInMonth(month, year) {
   return new Date(year, month + 1, 0).getDate();
