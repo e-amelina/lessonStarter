@@ -108,7 +108,7 @@ table {
   }
 }
 
-tr.department{
+tr.department {
   font-weight: 600;
   font-size: 12px;
   line-height: 17px;
@@ -216,7 +216,6 @@ tr.department{
   // display:table-row-group;
   .cell {
     border-bottom: 33px solid #fff;
-
   }
 
   &::after {
@@ -224,11 +223,10 @@ tr.department{
     display: block;
     position: absolute;
     height: 34px;
-    border-bottom: 1px solid rgba(126, 126, 126, 0.3);;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
     width: calc(100% - 16px);
     left: 8px;
   }
-  
 }
 
 // tr{
