@@ -212,6 +212,7 @@ tr.department {
 //   display: block;
 //   height: 33px;
 // }
+
 .last-row {
   // display:table-row-group;
   .cell {
@@ -243,3 +244,16 @@ tr.department {
 //   left: 0;
 //   background-color: #000;
 //   }
+
+.close {
+  max-height: 33px;
+  overflow: hidden;
+}
+
+.close .teem__info .teem__btn--hide {
+  transform: rotate(180deg);
+}
+
+.hidden ~ tr {
+  visibility: hidden;
+}
