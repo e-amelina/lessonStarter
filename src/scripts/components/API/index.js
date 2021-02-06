@@ -1,4 +1,4 @@
-import {createTableBody} from '../renderCalendar';
+// import {createTableBody} from '../renderCalendar';
 
 // export const departmentTeams = {
 //     teams: [
@@ -46,12 +46,11 @@ import {createTableBody} from '../renderCalendar';
 //   };
 
 export function getUsersFromServer(root, countDays, month, year, calendarContainer) {
-  const users = [];
+  // const users = [];
 
-  const pushToUsers = (user) => users.push(user);
+  // const pushToUsers = (user) => users.push(user);
 
-  // for (let userId = 1; userId <= showUsers; userId++){
-  fetch("https://jsonplaceholder.typicode.com/posts/1", {
+  return fetch("https://jsonplaceholder.typicode.com/posts/1", {
       method: "PUT",
       body: JSON.stringify({
         teams: [{
@@ -125,11 +124,13 @@ export function getUsersFromServer(root, countDays, month, year, calendarContain
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then(response => response.json())
-    .then(data => {
-      pushToUsers(data);
-      createTableBody(root, data, countDays, month, year, calendarContainer);
-    });
+    }).then(response => response.json());
+
+
+    // .then(data => {
+    //   pushToUsers(data);
+    //   createTableBody(root, data, countDays, month, year, calendarContainer);
+    // });
   // }
-  return users;
+  // return users;
 }
