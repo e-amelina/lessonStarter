@@ -20,7 +20,7 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   calendarHead.append(createTableHeader(currentDate));
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
   const calendarBody = document.createElement("tbody");
-  calendarContainer.append(createTableBody(calendarBody, departmentTeams, countDays, month, year));
+  // calendarContainer.append(createTableBody(calendarBody, departmentTeams, countDays, month, year));
   getUsersFromServer(calendarBody, countDays, month, year, calendarContainer);
 
   appElement.append(calendarContainer);
@@ -77,7 +77,7 @@ function createTableHeader(currentDate) {
 }
 
 export function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
-  console.log(teemsData);
+  console.log(teemsData.teams[0].name);
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
@@ -95,7 +95,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
         if(k === 0) {
           cell.classList.add("teem");
-          // cell.innerText = users[0].name;
+          cell.innerText = teemsData.teams[0].name;
 
           if(j === 0 ) {
             const wrap = document.createElement("div");
