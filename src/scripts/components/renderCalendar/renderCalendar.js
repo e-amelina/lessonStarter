@@ -77,7 +77,7 @@ function createTableHeader(currentDate) {
 }
 
 export function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
-  console.log(teemsData.teams[0].name);
+  console.log(teemsData.teams[0].name); // данные с сервера
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
@@ -95,6 +95,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
         if(k === 0) {
           cell.classList.add("teem");
+          // РАБОТА С ДАННЫМИ С СЕРВЕРА
           cell.innerText = teemsData.teams[0].name;
 
           if(j === 0 ) {
