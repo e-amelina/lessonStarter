@@ -76,12 +76,16 @@ function createTableBody(root, teemsData, countDays, month, year) {
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
+      row.classList.add(`block${i}`);
 
       if(j === 0 ) {
         row.classList.add("department");
       }
       if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
+      }
+      if (j !== 0) {
+        row.classList.add(`members${i}`);
       }
 
       for (let k = 0; k <= countDays + 1; k++) {
@@ -113,10 +117,18 @@ function createTableBody(root, teemsData, countDays, month, year) {
             const hideMembers = document.createElement("span");
             hideMembers.classList.add("teem__btn--hide");
             hideMembers.addEventListener("click", () => {
+              
               if(hideMembers.parentNode.parentElement.classList.contains('close')){
                 hideMembers.parentNode.parentElement.classList.remove('close');
+                row.classList.remove('hidden');
               }else{
                 hideMembers.parentNode.parentElement.classList.add('close');
+          
+                for (let l = 0; l < teemsData.teams.length; l++) {
+                  for (let q = 0; q < teemsData.teams[l].members.length + rowsForHeaderSection; q++) {
+                    row.classList.add('hidden');
+                  }
+                }
               }
             });
             
@@ -160,17 +172,6 @@ function isWeekend (date) {
 
   return false;
 }
-
-// function hideMembers(teemsData) {
-//   for (let i = 0; i < teemsData.teams.length; i++) {
-//     teemsData.teams[i].toggleComponent();
-//   }
-//   // if (teemsData.target.classList.contains("rotate-block")) {
-//   //   teemsData.target.classList.remove("rotate-block");
-//   // } else {
-//   //   teemsData.target.classList.add("rotate-block");
-//   // }
-// }
 
 
 export default renderCalendar;

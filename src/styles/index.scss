@@ -253,3 +253,7 @@ tr.department {
 .close .teem__info .teem__btn--hide {
   transform: rotate(180deg);
 }
+
+.hidden ~ tr {
+  visibility: hidden;
+}
