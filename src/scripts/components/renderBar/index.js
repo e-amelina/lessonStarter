@@ -1,1 +1,1 @@
-export { default } from "./renderBar";
+export  *  from "./renderBar";
