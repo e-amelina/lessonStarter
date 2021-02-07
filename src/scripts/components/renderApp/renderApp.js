@@ -1,6 +1,5 @@
 import { renderBar, monthNames } from "../renderBar";
-import renderCalendar from "../renderCalendar";
-
+import { renderCalendar } from "../renderCalendar";
 
 const renderApp = () => {
   const appElement = document.getElementById("appRoot");
