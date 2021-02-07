@@ -1,5 +1,5 @@
 import {getUsersFromServer} from '../API';
-
+import {getDaysInMonth,isWeekend} from '../utils'
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
@@ -9,7 +9,7 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
   if(rendered) {
     appElement.removeChild(appElement.lastChild);
-  } 
+  }
 
   const calendarContainer = document.createElement("table");
   const calendarHead = document.createElement("thead");
@@ -18,8 +18,8 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
     calendarHead.append(createTableHeader(currentDate));
     calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year))
   });
-  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer);
-  
+  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer)
+
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
 
   appElement.append(calendarContainer);
@@ -64,7 +64,7 @@ function createTableHeader(currentDate) {
     }
 
     row.append(cell);
-    
+
   }
 
   return row;
@@ -94,7 +94,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
         if(k === 0) {
           cell.classList.add("teem");
-        
+
           if(j === 0 ) {
             const wrap = document.createElement("div");
             wrap.classList.add("teem__info");
@@ -103,10 +103,10 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
             teemName.classList.add("teem__name");
             teemName.innerText = teemsData.teams[i].name;
             wrap.append(teemName);
-            
+
             const countMembersTeem = document.createElement("span");
             countMembersTeem.classList.add("teem__count-members");
-            countMembersTeem.innerText = teemsData.teams[i].members.length;
+            countMembersTeem.innerText = `${teemsData.teams[i].members.length}`;
             wrap.append(countMembersTeem);
 
             const percentageOfAbsent = document.createElement("span");
@@ -117,11 +117,11 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
             const hideMembers = document.createElement("span");
             hideMembers.classList.add("teem__btn--hide");
             hideMembers.addEventListener("click", (e) => {
-              
-              if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
+              const hideMember = hideMembers.parentNode.parentElement.parentElement.classList;
+              if(hideMember.contains('close')){
 
                 for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                  if(hideMember.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
                     const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
                     hiddenElem.forEach(elem => {
@@ -130,25 +130,24 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
                       }
                     });
                   }
-                
+
                 }
-                hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
+
+                hideMember.remove('close');
 
               } else {
-                hideMembers.parentNode.parentElement.parentElement.classList.add('close');
+                hideMember.add('close');
 
                 for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                  if(hideMember.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
                     const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
                     hiddenElem.forEach(elem => {
-                      if(!elem.classList.contains('close')) {
-                        elem.classList.add('hidden');
-                      }
+                      !elem.classList.contains('close') ? elem.classList.add('hidden') : false ;
                     });
-                  } 
+                  }
                 }
-          
+
                 // for (let l = 0; l < teemsData.teams.length; l++) {
                 //   for (let q = 0; q < teemsData.teams[l].members.length + rowsForHeaderSection; q++) {
                 //     row.classList.add('hidden');
@@ -156,7 +155,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
                 // }
               }
             });
-            
+
             wrap.append(hideMembers);
 
             cell.append(wrap);
@@ -164,7 +163,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
           } else {
             cell.innerText = teemsData.teams[i].members[j-1].name;
           }
-          
+
         } else if (k === countDays + 1){
           cell.classList.add("cell-sum");
 
@@ -176,25 +175,11 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
           }
         }
         row.append(cell);
-      }  
-    }  
+      }
+    }
   }
 
   return root;
 }
-
-function getDaysInMonth(month, year) {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-function isWeekend (date) {
-  if(date.getDay() === 0 || date.getDay() === 6) {
-
-    return true;
-  }
-
-  return false;
-}
-
 
 export default renderCalendar;
