@@ -1,8 +1,4 @@
-// import {departmentTeams} from '../API';
 import {getUsersFromServer} from '../API';
-
-// let users = getUsersFromServer();
-// console.log(te);
 
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
@@ -17,11 +13,14 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
   const calendarContainer = document.createElement("table");
   const calendarHead = document.createElement("thead");
-  calendarHead.append(createTableHeader(currentDate));
-  calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
   const calendarBody = document.createElement("tbody");
-  getUsersFromServer().then(data => calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year)));
+  getUsersFromServer().then(data => {
+    calendarHead.append(createTableHeader(currentDate));
+    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year))
+  });
   getUsersFromServer(calendarBody, countDays, month, year, calendarContainer);
+  
+  calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
 
   appElement.append(calendarContainer);
 };
@@ -40,15 +39,10 @@ function createTableHeader(currentDate) {
   button.innerHTML = "&#10011; Add Vacation";
 
   for(let i = 0; i <= countDays + 1; i++) {
-    // if(i === 0) {
-    //   //create button ????
-
-    // }
     const date = new Date(year, month, i);
     const cell = document.createElement("th");
     cell.classList.add("cell");
     if(i === 0) {
-      //create button
       cell.appendChild(button);
       cell.classList.add("cell-button");
     } else if (i !== (countDays + 1)) {
@@ -81,7 +75,8 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
-      row.classList.add(`block${i}`);
+      // row.classList.add(`block${i}`);
+      row.classList.add(`${(teemsData.teams[i].name).split(' ').join('-')}`);
 
       if(j === 0 ) {
         row.classList.add("department");
@@ -89,9 +84,9 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
       if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
       }
-      if (j !== 0) {
-        row.classList.add(`members${i}`);
-      }
+      // if (j !== 0) {
+      //   row.classList.add(`members${i}`);
+      // }
 
       for (let k = 0; k <= countDays + 1; k++) {
         const cell = document.createElement("td");
@@ -99,9 +94,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
         if(k === 0) {
           cell.classList.add("teem");
-          // РАБОТА С ДАННЫМИ С СЕРВЕРА
-          // cell.innerText = teemsData.teams[0].name;
-
+        
           if(j === 0 ) {
             const wrap = document.createElement("div");
             wrap.classList.add("teem__info");
@@ -123,19 +116,44 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
             const hideMembers = document.createElement("span");
             hideMembers.classList.add("teem__btn--hide");
-            hideMembers.addEventListener("click", () => {
+            hideMembers.addEventListener("click", (e) => {
               
-              if(hideMembers.parentNode.parentElement.classList.contains('close')){
-                hideMembers.parentNode.parentElement.classList.remove('close');
-                row.classList.remove('hidden');
-              }else{
-                hideMembers.parentNode.parentElement.classList.add('close');
-          
-                for (let l = 0; l < teemsData.teams.length; l++) {
-                  for (let q = 0; q < teemsData.teams[l].members.length + rowsForHeaderSection; q++) {
-                    row.classList.add('hidden');
+              if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
+
+                for(let t = 0; t < teemsData.teams.length; t++) {
+                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                    const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+
+                    hiddenElem.forEach(elem => {
+                      if(!elem.classList.contains('close')) {
+                        elem.classList.remove('hidden');
+                      }
+                    });
                   }
+                
                 }
+                hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
+
+              } else {
+                hideMembers.parentNode.parentElement.parentElement.classList.add('close');
+
+                for(let t = 0; t < teemsData.teams.length; t++) {
+                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                    const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+
+                    hiddenElem.forEach(elem => {
+                      if(!elem.classList.contains('close')) {
+                        elem.classList.add('hidden');
+                      }
+                    });
+                  } 
+                }
+          
+                // for (let l = 0; l < teemsData.teams.length; l++) {
+                //   for (let q = 0; q < teemsData.teams[l].members.length + rowsForHeaderSection; q++) {
+                //     row.classList.add('hidden');
+                //   }
+                // }
               }
             });
             
@@ -162,7 +180,6 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
     }  
   }
 
-  // calendarContainer.append(root);
   return root;
 }
 
