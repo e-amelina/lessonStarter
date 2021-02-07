@@ -43,7 +43,6 @@ table {
 
   &:hover {
     background: rgba(155, 153, 255, 0.1);
-    box-sizing: border-box;
     border-radius: 2px;
     cursor: pointer;
   }
@@ -113,15 +112,17 @@ tr.department {
   font-size: 12px;
   line-height: 17px;
   background: rgba(155, 153, 255, 0.1);
+  display: table-row;
 
-  &:not(:first-child)::after {
-    content: " ";
-    display: block;
-    position: absolute;
-    height: 17px;
-    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-    width: calc(100% - 16px);
-    left: 8px;
+  &:not(:first-child) {
+    &::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+      width: calc(100% - 16px);
+      left: 8px;
+    }
   }
 }
 
@@ -207,39 +208,42 @@ tr.department {
     height: 20px;
   }
 }
-// tbody::after {
-//   content: '';
-//   display: block;
-//   height: 33px;
-// }
+
 .last-row {
-  // display:table-row-group;
-  .cell {
-    border-bottom: 33px solid #fff;
-  }
+  border-bottom: 33px solid #fff;
 
   &::after {
     content: " ";
     display: block;
     position: absolute;
-    height: 34px;
+    height: 35px;
     border-bottom: 1px solid rgba(126, 126, 126, 0.3);
     width: calc(100% - 16px);
     left: 8px;
   }
 }
 
-// tr{
-//   transform: translateY(0px);
-// position: relative;
-// }
-// .department::before {
-//   content: "";
-//   display: block;
-//   // position: absolute;
-//   height: 10px;
-//   width: 100%;
-//   bottom: 0;
-//   left: 0;
-//   background-color: #000;
-//   }
+tr.close.department {
+  border-bottom: 33px solid #fff;
+
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    height: 34px;
+    border-top: 1px solid rgba(126, 126, 126, 0.3);
+    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+    width: calc(100% - 16px);
+    left: 8px;
+  }
+}
+
+.close .teem__info .teem__btn--hide {
+  transform: rotate(180deg);
+  position: relative;
+  z-index: 2;
+}
+
+.hidden {
+  display: none;
+}
