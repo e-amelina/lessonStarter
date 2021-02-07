@@ -1,5 +1,5 @@
 import {getUsersFromServer} from '../API';
-import {getDaysInMonth,isWeekend} from '../utils'
+import {getDaysInMonth,isWeekend} from '../utils';
 
 const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
@@ -16,9 +16,9 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
   const calendarBody = document.createElement("tbody");
   getUsersFromServer().then(data => {
     calendarHead.append(createTableHeader(currentDate));
-    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year))
+    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year));
   });
-  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer)
+  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer);
 
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
 
