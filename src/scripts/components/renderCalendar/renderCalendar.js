@@ -1,7 +1,7 @@
 import {getUsersFromServer} from '../API';
-import {getDaysInMonth,isWeekend} from '../utils'
 
-const renderCalendar = ({ appElement, currentDate, rendered }) => {
+
+export const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -9,17 +9,16 @@ const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
   if(rendered) {
     appElement.removeChild(appElement.lastChild);
-  }
+  } 
 
   const calendarContainer = document.createElement("table");
   const calendarHead = document.createElement("thead");
   const calendarBody = document.createElement("tbody");
   getUsersFromServer().then(data => {
     calendarHead.append(createTableHeader(currentDate));
-    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year))
+    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year));
   });
-  getUsersFromServer(calendarBody, countDays, month, year, calendarContainer)
-
+  
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
 
   appElement.append(calendarContainer);
@@ -64,18 +63,17 @@ function createTableHeader(currentDate) {
     }
 
     row.append(cell);
-
+    
   }
 
   return row;
 }
 
-export function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
-  console.log(teemsData.teams[0].name); // данные с сервера
+function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
+  console.log(teemsData.teams[0].name); 
   for (let i = 0; i < teemsData.teams.length; i++) {
     for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
       const row = root.insertRow();
-      // row.classList.add(`block${i}`);
       row.classList.add(`${(teemsData.teams[i].name).split(' ').join('-')}`);
 
       if(j === 0 ) {
@@ -84,9 +82,6 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
       if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
       }
-      // if (j !== 0) {
-      //   row.classList.add(`members${i}`);
-      // }
 
       for (let k = 0; k <= countDays + 1; k++) {
         const cell = document.createElement("td");
@@ -94,7 +89,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
 
         if(k === 0) {
           cell.classList.add("teem");
-
+        
           if(j === 0 ) {
             const wrap = document.createElement("div");
             wrap.classList.add("teem__info");
@@ -103,10 +98,10 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
             teemName.classList.add("teem__name");
             teemName.innerText = teemsData.teams[i].name;
             wrap.append(teemName);
-
+            
             const countMembersTeem = document.createElement("span");
             countMembersTeem.classList.add("teem__count-members");
-            countMembersTeem.innerText = `${teemsData.teams[i].members.length}`;
+            countMembersTeem.innerText = teemsData.teams[i].members.length;
             wrap.append(countMembersTeem);
 
             const percentageOfAbsent = document.createElement("span");
@@ -117,11 +112,11 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
             const hideMembers = document.createElement("span");
             hideMembers.classList.add("teem__btn--hide");
             hideMembers.addEventListener("click", (e) => {
-              const hideMember = hideMembers.parentNode.parentElement.parentElement.classList;
-              if(hideMember.contains('close')){
+              
+              if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
 
                 for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMember.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
                     const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
                     hiddenElem.forEach(elem => {
@@ -130,32 +125,27 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
                       }
                     });
                   }
-
+                
                 }
-
-                hideMember.remove('close');
+                hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
 
               } else {
-                hideMember.add('close');
+                hideMembers.parentNode.parentElement.parentElement.classList.add('close');
 
                 for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMember.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
                     const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
                     hiddenElem.forEach(elem => {
-                      !elem.classList.contains('close') ? elem.classList.add('hidden') : false ;
+                      if(!elem.classList.contains('close')) {
+                        elem.classList.add('hidden');
+                      }
                     });
-                  }
+                  } 
                 }
-
-                // for (let l = 0; l < teemsData.teams.length; l++) {
-                //   for (let q = 0; q < teemsData.teams[l].members.length + rowsForHeaderSection; q++) {
-                //     row.classList.add('hidden');
-                //   }
-                // }
               }
             });
-
+            
             wrap.append(hideMembers);
 
             cell.append(wrap);
@@ -163,7 +153,7 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
           } else {
             cell.innerText = teemsData.teams[i].members[j-1].name;
           }
-
+          
         } else if (k === countDays + 1){
           cell.classList.add("cell-sum");
 
@@ -175,11 +165,22 @@ export function createTableBody(root, teemsData, countDays, month, year, calenda
           }
         }
         row.append(cell);
-      }
-    }
+      }  
+    }  
   }
 
   return root;
 }
 
-export default renderCalendar;
+function getDaysInMonth(month, year) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function isWeekend (date) {
+  if(date.getDay() === 0 || date.getDay() === 6) {
+
+    return true;
+  }
+
+  return false;
+}

@@ -1,1 +1,1 @@
-export { default, isWeekend,getDaysInMonth } from "./utils";
+export { isWeekend, getDaysInMonth } from "./utils";

@@ -1,4 +1,3 @@
-
 html,
 body {
   font-family: "Open Sans", sans-serif;
@@ -214,6 +213,11 @@ tr.department {
 
 .last-row {
   border-bottom: 33px solid #fff;
+
+  td {
+    position: relative;
+    z-index: 3;
+  }
 
   &::after {
     content: " ";

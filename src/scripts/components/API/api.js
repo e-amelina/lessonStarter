@@ -1,8 +1,5 @@
-export function getUsersFromServer(root, countDays, month, year, calendarContainer) {
-  // const users = [];
-
-  // const pushToUsers = (user) => users.push(user);
-
+export function getUsersFromServer() {
+ 
   return fetch("https://jsonplaceholder.typicode.com/posts/1", {
     method: "PUT",
     body: JSON.stringify({
@@ -116,11 +113,4 @@ export function getUsersFromServer(root, countDays, month, year, calendarContain
     },
   }).then(response => response.json());
 
-
-  // .then(data => {
-  //   pushToUsers(data);
-  //   createTableBody(root, data, countDays, month, year, calendarContainer);
-  // });
-  // }
-  // return users;
 }
