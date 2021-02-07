@@ -1,8 +1,3 @@
-$fronend: #9b99ff;
-$designers: #7aafff;
-$backend: #f99;
-$managers:#ffa768;
-
 html,
 body {
   font-family: "Open Sans", sans-serif;
@@ -118,8 +113,7 @@ tr.department {
   font-weight: 600;
   font-size: 12px;
   line-height: 17px;
-  // background: rgba(155, 153, 255, 0.1);
-  // opacity: 0.1;
+  background: rgba(155, 153, 255, 0.1);
   display: table-row;
 
   &:not(:first-child) {
@@ -130,62 +124,6 @@ tr.department {
       border-bottom: 1px solid rgba(126, 126, 126, 0.3);
       width: calc(100% - 16px);
       left: 8px;
-    }
-  }
-}
-
-tr.Frontend-Team {
-  border-left: 3px solid $fronend;
-
-  &.department {
-    background: rgba(155, 153, 255, 0.1);
-  }
-
-  .teem {
-    &__percentage-absent {
-      background: $fronend;
-    }
-  }
-}
-
-tr.Backend-Team {
-  border-left: 3px solid $backend;
-
-  &.department {
-    background: rgba(255, 153, 153, 0.1);
-  }
-
-  .teem {
-    &__percentage-absent {
-      background: $backend;
-    }
-  }
-}
-
-tr.Designers {
-  border-left: 3px solid $designers;
-
-  &.department {
-    background: rgba(122, 175, 255, 0.1);
-  }
-
-  .teem {
-    &__percentage-absent {
-      background: $designers;
-    }
-  }
-}
-
-tr.Managers {
-  border-left: 3px solid $managers;
-
-  &.department {
-    background: rgba(255, 167, 104, 0.1);
-  }
-
-  .teem {
-    &__percentage-absent {
-      background: $managers;
     }
   }
 }
@@ -262,6 +200,7 @@ tr.Managers {
     line-height: 18px;
     padding: 1px 2px;
     color: #fff;
+    background: #9b99ff;
     border-radius: 2px;
   }
 
@@ -301,7 +240,7 @@ tr.close.department {
     height: 34px;
     border-top: 1px solid rgba(126, 126, 126, 0.3);
     border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-    width: calc(100% - 160px);
+    width: calc(100% - 16px);
     left: 8px;
   }
 }
