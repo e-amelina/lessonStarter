@@ -1,4 +1,4 @@
-
+const currentDate = new Date()
 export function isWeekend (date) {
   if(date.getDay() === 0 || date.getDay() === 6) {
 
