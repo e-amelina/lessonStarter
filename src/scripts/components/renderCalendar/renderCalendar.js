@@ -1,4 +1,5 @@
 import {getUsersFromServer} from '../API';
+import {getDaysInMonth, isWeekend} from '../utils';
 
 
 export const renderCalendar = ({ appElement, currentDate, rendered }) => {
@@ -17,6 +18,7 @@ export const renderCalendar = ({ appElement, currentDate, rendered }) => {
   getUsersFromServer().then(data => {
     calendarHead.append(createTableHeader(currentDate));
     calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year));
+    fillTeemCells(data, month);
   });
   
   calendarContainer.prepend(calendarHead); // This element must contain tr > th*monthLength > <span>DayName</span> + <span>DayNum</span>
@@ -27,6 +29,34 @@ export const renderCalendar = ({ appElement, currentDate, rendered }) => {
 const rowsForHeaderSection = 1;
 
 const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St'];
+
+function addRow (root) {
+  return root.insertRow();
+}
+
+function addCells(row, countDays, year, month) {
+  const countCellForTeemsName = 1;
+  const countCellsForSumPD = 1;
+  for (let dayNumber = 1; dayNumber <= countDays + countCellForTeemsName + countCellsForSumPD; dayNumber++) {
+    const cell = document.createElement("td");
+    cell.classList.add("cell");
+
+    if(dayNumber === 1) {
+      cell.classList.add("teem");
+    } else if(dayNumber === countDays + countCellsForSumPD + countCellForTeemsName) {
+      cell.classList.add("cell-sum");
+    } else {
+      const date = new Date(year, month, dayNumber-1);
+
+      if(isWeekend(date)) {
+        cell.classList.add("weekend");
+      }
+    }
+
+    row.append(cell);
+    
+  }
+}
 
 function createTableHeader(currentDate) {
   const row = document.createElement("tr");
@@ -69,118 +99,188 @@ function createTableHeader(currentDate) {
   return row;
 }
 
+function fillTeemCells(teemsData, month) {
+  const teemCells = getTeemCells();
+  let cellNumber = 0;
+    for (let teemNum = 0; teemNum < teemsData.teams.length; teemNum++) {
+      for (let memberNum = 0; memberNum <= teemsData.teams[teemNum].members.length; memberNum++) {
+        if(!memberNum){
+          teemCells[cellNumber].append(fillCellInformationAboutTeem(teemsData, teemNum, month));
+        } else {
+          teemCells[cellNumber].innerText = `${teemsData.teams[teemNum].members[memberNum-1].name}`;
+        }
+        cellNumber++;
+      }
+    }
+}
+
+function fillCellInformationAboutTeem( teemsData, teemNumber, month) {
+  const wrap = document.createElement("div");
+  wrap.classList.add("teem__info");
+
+  const teemName = document.createElement("span");
+  teemName.classList.add("teem__name");
+  teemName.innerText = teemsData.teams[teemNumber].name;
+  wrap.append(teemName);
+  
+  const countMembersTeem = document.createElement("span");
+  countMembersTeem.classList.add("teem__count-members");
+  countMembersTeem.innerText = teemsData.teams[teemNumber].members.length;
+  wrap.append(countMembersTeem);
+
+  const percentageOfAbsent = document.createElement("span");
+  percentageOfAbsent.classList.add("teem__percentage-absent");
+  percentageOfAbsent.innerText = ` ${teemsData.teams[teemNumber].percentageOfAbsent[month]}%`;
+  wrap.append(percentageOfAbsent);
+
+  const hideMembers = document.createElement("span");
+  hideMembers.classList.add("teem__btn--hide");
+  hideMembers.addEventListener("click", (e) => {
+    
+    if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
+
+      for(let t = 0; t < teemsData.teams.length; t++) {
+        if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+          const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+
+          hiddenElem.forEach(elem => {
+            if(!elem.classList.contains('close')) {
+              elem.classList.remove('hidden');
+            }
+          });
+        }
+      
+      }
+      hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
+
+    } else {
+      hideMembers.parentNode.parentElement.parentElement.classList.add('close');
+
+      for(let t = 0; t < teemsData.teams.length; t++) {
+        if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+          const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+
+          hiddenElem.forEach(elem => {
+            if(!elem.classList.contains('close')) {
+              elem.classList.add('hidden');
+            }
+          });
+        } 
+      }
+    }
+
+  });
+
+  wrap.append(hideMembers);
+
+  return wrap;
+}
+
+function getTeemCells () {
+  return document.querySelectorAll('.teem');
+}
+
 function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
   console.log(teemsData.teams[0].name); 
-  for (let i = 0; i < teemsData.teams.length; i++) {
-    for (let j = 0; j < teemsData.teams[i].members.length + rowsForHeaderSection; j++) {
-      const row = root.insertRow();
-      row.classList.add(`${(teemsData.teams[i].name).split(' ').join('-')}`);
+  for (let teemNumber = 0; teemNumber < teemsData.teams.length; teemNumber++) {
+    for (let memberNumber = 0; memberNumber < teemsData.teams[teemNumber].members.length + rowsForHeaderSection; memberNumber++) {
+      const row = addRow(root);
+      row.classList.add(`${(teemsData.teams[teemNumber].name).split(' ').join('-')}`);
 
-      if(j === 0 ) {
+      if(memberNumber === 0 ) {
         row.classList.add("department");
       }
-      if (j === teemsData.teams[i].members.length + rowsForHeaderSection - 1) {
+      if (memberNumber === teemsData.teams[teemNumber].members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
       }
+      addCells(row, countDays, year, month);
 
-      for (let k = 0; k <= countDays + 1; k++) {
-        const cell = document.createElement("td");
-        cell.classList.add("cell");
+      // for (let k = 0; k <= countDays + 1; k++) {
+      //   const cell = document.createElement("td");
+      //   cell.classList.add("cell");
 
-        if(k === 0) {
-          cell.classList.add("teem");
+      //   if(k === 0) {
+      //     cell.classList.add("teem");
         
-          if(j === 0 ) {
-            const wrap = document.createElement("div");
-            wrap.classList.add("teem__info");
+      //     if(memberNumber === 0 ) {
+            // const wrap = document.createElement("div");
+            // wrap.classList.add("teem__info");
 
-            const teemName = document.createElement("span");
-            teemName.classList.add("teem__name");
-            teemName.innerText = teemsData.teams[i].name;
-            wrap.append(teemName);
+            // const teemName = document.createElement("span");
+            // teemName.classList.add("teem__name");
+            // teemName.innerText = teemsData.teams[teemNumber].name;
+            // wrap.append(teemName);
             
-            const countMembersTeem = document.createElement("span");
-            countMembersTeem.classList.add("teem__count-members");
-            countMembersTeem.innerText = teemsData.teams[i].members.length;
-            wrap.append(countMembersTeem);
+            // const countMembersTeem = document.createElement("span");
+            // countMembersTeem.classList.add("teem__count-members");
+            // countMembersTeem.innerText = teemsData.teams[teemNumber].members.length;
+            // wrap.append(countMembersTeem);
 
-            const percentageOfAbsent = document.createElement("span");
-            percentageOfAbsent.classList.add("teem__percentage-absent");
-            percentageOfAbsent.innerText = ` ${teemsData.teams[i].percentageOfAbsent[month]}%`;
-            wrap.append(percentageOfAbsent);
+            // const percentageOfAbsent = document.createElement("span");
+            // percentageOfAbsent.classList.add("teem__percentage-absent");
+            // percentageOfAbsent.innerText = ` ${teemsData.teams[teemNumber].percentageOfAbsent[month]}%`;
+            // wrap.append(percentageOfAbsent);
 
-            const hideMembers = document.createElement("span");
-            hideMembers.classList.add("teem__btn--hide");
-            hideMembers.addEventListener("click", (e) => {
+            // const hideMembers = document.createElement("span");
+            // hideMembers.classList.add("teem__btn--hide");
+            // hideMembers.addEventListener("click", (e) => {
               
-              if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
+            //   if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
 
-                for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
-                    const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+            //     for(let t = 0; t < teemsData.teams.length; t++) {
+            //       if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+            //         const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
-                    hiddenElem.forEach(elem => {
-                      if(!elem.classList.contains('close')) {
-                        elem.classList.remove('hidden');
-                      }
-                    });
-                  }
+            //         hiddenElem.forEach(elem => {
+            //           if(!elem.classList.contains('close')) {
+            //             elem.classList.remove('hidden');
+            //           }
+            //         });
+            //       }
                 
-                }
-                hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
+            //     }
+            //     hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
 
-              } else {
-                hideMembers.parentNode.parentElement.parentElement.classList.add('close');
+            //   } else {
+            //     hideMembers.parentNode.parentElement.parentElement.classList.add('close');
 
-                for(let t = 0; t < teemsData.teams.length; t++) {
-                  if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
-                    const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
+            //     for(let t = 0; t < teemsData.teams.length; t++) {
+            //       if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+            //         const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
 
-                    hiddenElem.forEach(elem => {
-                      if(!elem.classList.contains('close')) {
-                        elem.classList.add('hidden');
-                      }
-                    });
-                  } 
-                }
-              }
-            });
+            //         hiddenElem.forEach(elem => {
+            //           if(!elem.classList.contains('close')) {
+            //             elem.classList.add('hidden');
+            //           }
+            //         });
+            //       } 
+            //     }
+            //   }
+      //       });
             
-            wrap.append(hideMembers);
+      //       wrap.append(hideMembers);
 
-            cell.append(wrap);
+      //       cell.append(wrap);
 
-          } else {
-            cell.innerText = teemsData.teams[i].members[j-1].name;
-          }
+      //     } else {
+      //       cell.innerText = teemsData.teams[teemNumber].members[memberNumber-1].name;
+      //     }
           
-        } else if (k === countDays + 1){
-          cell.classList.add("cell-sum");
+      //   } else if (k === countDays + 1){
+      //     cell.classList.add("cell-sum");
 
-        } else {
-          const date = new Date(year, month, k);
+      //   } else {
+      //     const date = new Date(year, month, k);
 
-          if(isWeekend(date)) {
-            cell.classList.add("weekend");
-          }
-        }
-        row.append(cell);
-      }  
+      //     if(isWeekend(date)) {
+      //       cell.classList.add("weekend");
+      //     }
+      //   }
+      //   row.append(cell);
+      // }  
     }  
   }
 
   return root;
 }
 
-function getDaysInMonth(month, year) {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-function isWeekend (date) {
-  if(date.getDay() === 0 || date.getDay() === 6) {
-
-    return true;
-  }
-
-  return false;
-}
