@@ -1,4 +1,4 @@
-import { renderBar, monthNames } from "../renderBar";
+import { renderBar } from "../renderBar";
 import { renderCalendar } from "../renderCalendar";
 
 const renderApp = () => {
@@ -24,7 +24,12 @@ const renderApp = () => {
     button.classList.remove('active');
     
     if(displayDate) {
-      displayDate.innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+      displayDate.innerText = `${currentDate.toLocaleDateString('en-US', 
+      {
+        year: 'numeric',
+        month: 'long',
+      }
+      )}`;
     }
 
     renderCalendar({ appElement, currentDate, rendered });
