@@ -2,15 +2,12 @@ export const renderBar = ({ appElement, currentDate, pickCurrentDate}) => {
 
   const calendarToolbar = document.createElement("div");
   calendarToolbar.prepend(createButton(pickCurrentDate, false));
-  calendarToolbar.append(createDisplay(currentDate.getMonth(), currentDate.getFullYear()));
+  calendarToolbar.append(createDisplay(currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', })));
   calendarToolbar.append(createButton(pickCurrentDate, true));
 
   calendarToolbar.classList.add("calendarBar");
   appElement.prepend(calendarToolbar);
 };
-
-export const monthNames = ["January", "February", "March", "April", "May", "June",
-"July", "August", "September", "October", "November", "December"];
 
 
 function createButton (pickCurrentDate, increased) {
@@ -26,10 +23,10 @@ function createButton (pickCurrentDate, increased) {
   return button;
 }
 
-function createDisplay(month, year) {
+function createDisplay(date) {
   const display = document.createElement("span");
   display.classList.add("display-date");
-  display.innerText = `${monthNames[month]} ${year}`;
+  display.innerText = `${date}`;
 
   return display;
 }

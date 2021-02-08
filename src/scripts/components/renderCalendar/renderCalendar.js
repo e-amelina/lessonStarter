@@ -4,8 +4,15 @@ import {getDaysInMonth, isWeekend} from '../utils';
 
 export const renderCalendar = ({ appElement, currentDate, rendered }) => {
 
-  const month = currentDate.getMonth();
-  const year = currentDate.getFullYear();
+  const month = currentDate.toLocaleDateString('en-US', {
+    month: 'numeric',
+  });
+  const year = currentDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+  });
+  const day = currentDate.toLocaleDateString('en-US', {
+    weekday: 'short',
+  });
   const countDays = getDaysInMonth(month, year);
 
   if(rendered) {
@@ -16,8 +23,9 @@ export const renderCalendar = ({ appElement, currentDate, rendered }) => {
   const calendarHead = document.createElement("thead");
   const calendarBody = document.createElement("tbody");
   getUsersFromServer().then(data => {
-    calendarHead.append(createTableHeader(currentDate));
-    calendarContainer.append(createTableBody(calendarBody, data, countDays, month, year));
+    calendarHead.append(createTableHeader(calendarHead, day, countDays));
+    fillDaysCells(year, month);
+    calendarContainer.append(createTableBody(calendarBody, data, countDays, day));
     fillTeemCells(data, month);
   });
   
@@ -27,28 +35,30 @@ export const renderCalendar = ({ appElement, currentDate, rendered }) => {
 };
 
 const rowsForHeaderSection = 1;
-
-const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St'];
+const countCellForTeemsName = 1;
+const countCellsForSumPD = 1;
 
 function addRow (root) {
   return root.insertRow();
 }
 
-function addCells(row, countDays, year, month) {
-  const countCellForTeemsName = 1;
-  const countCellsForSumPD = 1;
+function addCells(row, countDays, day, tag, className) {
+  
   for (let dayNumber = 1; dayNumber <= countDays + countCellForTeemsName + countCellsForSumPD; dayNumber++) {
-    const cell = document.createElement("td");
-    cell.classList.add("cell");
+    const cell = document.createElement(`${tag}`);
+    if(className) {
+      cell.classList.add(`${className}`);
+    }
+    cell.classList.add('cell');
+
 
     if(dayNumber === 1) {
       cell.classList.add("teem");
     } else if(dayNumber === countDays + countCellsForSumPD + countCellForTeemsName) {
       cell.classList.add("cell-sum");
     } else {
-      const date = new Date(year, month, dayNumber-1);
 
-      if(isWeekend(date)) {
+      if(isWeekend(day)) {
         cell.classList.add("weekend");
       }
     }
@@ -58,50 +68,52 @@ function addCells(row, countDays, year, month) {
   }
 }
 
-function createTableHeader(currentDate) {
-  const row = document.createElement("tr");
+function createTableHeader(root, day, countDays) {
+  const row = addRow(root);
+  row.classList.add('days');
 
-  const month = currentDate.getMonth();
-  const year = currentDate.getFullYear();
-  const countDays = getDaysInMonth(month, year);
-  const button = document.createElement("BUTTON");
-  button.innerHTML = "&#10011; Add Vacation";
-
-  for(let i = 0; i <= countDays + 1; i++) {
-    const date = new Date(year, month, i);
-    const cell = document.createElement("th");
-    cell.classList.add("cell");
-    if(i === 0) {
-      cell.appendChild(button);
-      cell.classList.add("cell-button");
-    } else if (i !== (countDays + 1)) {
-      const contentCellDay = document.createElement("span");
-      contentCellDay.classList.add("day");
-      contentCellDay.innerText = daysOfWeek[date.getDay()];
-      if(isWeekend(date)) {
-        cell.classList.add("weekend");
-      }
-      cell.append(contentCellDay);
-
-      const contentCellNumberDay = document.createElement("span");
-      contentCellNumberDay.classList.add("date");
-      contentCellNumberDay.innerText = date.getDate();
-      cell.append(contentCellNumberDay);
-    } else {
-      cell.innerText = 'Sum';
-      cell.classList.add("cell-sum");
-    }
-
-    row.append(cell);
-    
-  }
+  addCells(row, countDays, day,'th','day');
 
   return row;
 }
+  
+function fillDaysCells(year, month) {
+  const daysCells = getCells('.day');
+  const button = document.createElement("BUTTON");
+  button.innerHTML = "&#10011; Add Vacation";
+
+  for(let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
+    if(!cellNumber) {
+      daysCells[cellNumber].appendChild(button);
+      daysCells[cellNumber].classList.add("cell-button");
+    } else if(cellNumber === daysCells.length-1) {
+      daysCells[cellNumber].innerText = 'Sum';
+      daysCells[cellNumber].classList.add("cell-sum");
+    } else {
+      const date = new Date(year, month, cellNumber);
+      const contentCellDay = document.createElement("span");
+      contentCellDay.classList.add("day");
+      contentCellDay.innerText = `${date.toLocaleDateString('en-US', { weekday: 'short' })}`;
+      daysCells[cellNumber].append(contentCellDay);
+
+      
+      const contentCellNumberDay = document.createElement("span");
+      contentCellNumberDay.classList.add("date");
+      contentCellNumberDay.innerText = `${date.toLocaleDateString('en-US', { day: 'numeric'})}`;
+      daysCells[cellNumber].append(contentCellNumberDay);
+    }
+  }
+
+
+}
+
+function getCells(className) {
+  return document.querySelectorAll(`${className}`);
+}
 
 function fillTeemCells(teemsData, month) {
-  const teemCells = getTeemCells();
-  let cellNumber = 0;
+  const teemCells = getCells('.teem');
+  let cellNumber = 1;
     for (let teemNum = 0; teemNum < teemsData.teams.length; teemNum++) {
       for (let memberNum = 0; memberNum <= teemsData.teams[teemNum].members.length; memberNum++) {
         if(!memberNum){
@@ -176,12 +188,8 @@ function fillCellInformationAboutTeem( teemsData, teemNumber, month) {
   return wrap;
 }
 
-function getTeemCells () {
-  return document.querySelectorAll('.teem');
-}
 
-function createTableBody(root, teemsData, countDays, month, year, calendarContainer) {
-  console.log(teemsData.teams[0].name); 
+function createTableBody(root, teemsData, countDays, day) {
   for (let teemNumber = 0; teemNumber < teemsData.teams.length; teemNumber++) {
     for (let memberNumber = 0; memberNumber < teemsData.teams[teemNumber].members.length + rowsForHeaderSection; memberNumber++) {
       const row = addRow(root);
@@ -193,7 +201,7 @@ function createTableBody(root, teemsData, countDays, month, year, calendarContai
       if (memberNumber === teemsData.teams[teemNumber].members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
       }
-      addCells(row, countDays, year, month);
+      addCells(row, countDays, day, 'td' );
     }  
   }
 

@@ -1,6 +1,6 @@
 
 export function isWeekend (date) {
-  if(date.getDay() === 0 || date.getDay() === 6) {
+  if(date === 'Sun' || date === 'Sat') {
 
     return true;
   }
@@ -9,5 +9,5 @@ export function isWeekend (date) {
 }
 
 export function getDaysInMonth(month, year) {
-  return new Date(year, month + 1, 0).getDate();
+  return new Date(year, month, 0).getDate();
 }
