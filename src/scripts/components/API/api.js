@@ -1,5 +1,5 @@
 export class Api {
-  getUsersFromServer() {
+  static getUsers() {
  
     return fetch("https://jsonplaceholder.typicode.com/posts/1", {
       method: "PUT",
