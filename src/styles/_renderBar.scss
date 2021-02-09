@@ -5,6 +5,7 @@
 }
 
 .btn {
+  display: inline-block;
   width: 40px;
   height: 40px;
 }
@@ -18,6 +19,9 @@
 }
 
 .display-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
