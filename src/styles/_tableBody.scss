@@ -1,0 +1,178 @@
+tr.department {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+    display: table-row;
+  
+    &:not(:first-child) {
+      &::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+        width: calc(100% - 16px);
+        left: 8px;
+      }
+    }
+  }
+  
+  tr.Frontend-Team {
+    border-left: 3px solid $fronend;
+  
+    &.department {
+      background: rgba(155, 153, 255, 0.1);
+    }
+  
+    .teem {
+      &__percentage-absent {
+        background: $fronend;
+      }
+    }
+  }
+  
+  tr.Backend-Team {
+    border-left: 3px solid $backend;
+  
+    &.department {
+      background: rgba(255, 153, 153, 0.1);
+    }
+  
+    .teem {
+      &__percentage-absent {
+        background: $backend;
+      }
+    }
+  }
+  
+  tr.Designers {
+    border-left: 3px solid $designers;
+  
+    &.department {
+      background: rgba(122, 175, 255, 0.1);
+    }
+  
+    .teem {
+      &__percentage-absent {
+        background: $designers;
+      }
+    }
+  }
+  
+  tr.Managers {
+    border-left: 3px solid $managers;
+  
+    &.department {
+      background: rgba(255, 167, 104, 0.1);
+    }
+  
+    .teem {
+      &__percentage-absent {
+        background: $managers;
+      }
+    }
+  }
+  
+  .teems {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  
+  .weekend {
+    background: #f0f0f0;
+  }
+  
+  .teem {
+    min-width: 260px;
+    padding: 0 20px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+  
+    &__name {
+      font-weight: 600;
+    }
+  
+    &__info {
+      display: flex;
+      justify-content: start;
+      flex-wrap: wrap;
+    }
+  
+    &__count-members {
+      width: 50px;
+      font-size: 12px;
+      line-height: 18px;
+      color: #949494;
+      margin-left: auto;
+  
+      &::before {
+        content: "";
+        width: 20px;
+        display: inline-block;
+        background-image: url(http://localhost:8080/js/../src/assets/img/groups.svg);
+        height: 15px;
+        background-size: 20px 20px;
+        opacity: 0.6;
+        background-repeat: no-repeat;
+        padding-left: 3px;
+      }
+    }
+  
+    &__percentage-absent {
+      font-size: 12px;
+      line-height: 18px;
+      padding: 1px 2px;
+      color: #fff;
+      border-radius: 2px;
+    }
+  
+    &__btn--hide {
+      background-image: url(../assets/img/arrowUp.svg);
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  .last-row {
+    border-bottom: 33px solid #fff;
+  
+    td {
+      position: relative;
+      z-index: 3;
+    }
+  
+    &::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      height: 35px;
+      border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+      width: calc(100% - 16px);
+      left: 8px;
+    }
+  }
+  
+  tr.close.department {
+    border-bottom: 33px solid #fff;
+  
+    &::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      height: 34px;
+      border-top: 1px solid rgba(126, 126, 126, 0.3);
+      border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+      width: calc(100% - 16px);
+      left: 8px;
+    }
+  }
+  
+  .close .teem__info .teem__btn--hide {
+    transform: rotate(180deg);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hidden {
+    display: none;
+  }
