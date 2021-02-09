@@ -10,8 +10,9 @@ tr.department {
         display: block;
         position: absolute;
         border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-        width: calc(100% - 16px);
-        left: 8px;
+        width: calc(1400px - 20px);
+        left: 50%;
+        transform: translate(-50%, 0);
       }
     }
   }
@@ -162,8 +163,9 @@ tr.department {
       height: 34px;
       border-top: 1px solid rgba(126, 126, 126, 0.3);
       border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-      width: calc(100% - 16px);
-      left: 8px;
+      width: calc(1400px - 20px);
+      left: 50%;
+      transform: translate(-50%, 0);
     }
   }
   

@@ -32,3 +32,51 @@ function createDisplay(date) {
 }
 
 
+
+// import { Component } from "../component";
+
+// export class Navigation extends Component {
+//   constructor(parentSelector, currentDate) {
+//     super(parentSelector);
+//     // this.tableComponent = tableComponent;
+//     this.currentDate = currentDate;
+//     this.component.innerHTML = `<div class="btn prev-btn"></div>
+//         <span class="display-date">${this.date.toLocaleDateString('en-US', 
+//         {
+//           year: 'numeric',
+//           month: 'long',
+//         }
+//         )}</span>
+//         <div class="btn next-btn"></div>`;
+//     this.component.querySelector(".prev-btn").addEventListener("click", this.prevMonth.bind(this));
+//     this.component.querySelector(".next-btn").addEventListener("click", this.nextMonth.bind(this));
+//     this.component.classList.add("display-date"); 
+//   }
+
+//   prevMonth() {
+//     this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
+//     this.updateMonth(this.date);
+//     this.tableComponent.updateTableHead(this.date);
+//   }
+
+//   nextMonth() {
+//     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 1);
+//     this.updateMonth(this.date);
+//     this.tableComponent.updateTableHead(this.date);
+//   }
+
+//   updateMonth(newDate) {
+//     this.component.querySelector(".display-date").textContent = newDate.toLocaleDateString('en-US', 
+//     {
+//       year: 'numeric',
+//       month: 'long',
+//     }
+//     );
+//   }
+
+//   render() {
+//     super.render();
+//   }
+// }
+
+// export const renderBar = new Navigation({appElement, currentDate});
