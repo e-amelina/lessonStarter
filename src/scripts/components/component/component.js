@@ -1,5 +1,5 @@
 export class Component {
-    constructor(parentSelector, tagName) {
+    constructor(parentSelector, tagName = 'div') {
       if (typeof parentSelector === "string") {
         this.parent = document.querySelector(parentSelector);
       } else {
