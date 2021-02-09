@@ -1,43 +1,10 @@
-// export const renderBar = ({ appElement, currentDate, pickCurrentDate}) => {
-
-//   const calendarToolbar = document.createElement("div");
-//   calendarToolbar.prepend(createButton(pickCurrentDate, false));
-//   calendarToolbar.append(createDisplay(currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', })));
-//   calendarToolbar.append(createButton(pickCurrentDate, true));
-
-//   calendarToolbar.classList.add("calendarBar");
-//   appElement.prepend(calendarToolbar);
-// };
-
-
-// function createButton (pickCurrentDate, increased) {
-//   const button = document.createElement("div");
-//   button.classList.add("btn");
-//   increased ? button.classList.add("next-btn") : button.classList.add("prev-btn");
-
-//   button.addEventListener("click", () => {
-//     button.classList.add('active');
-//     pickCurrentDate();
-//   });
-
-//   return button;
-// }
-
-// function createDisplay(date) {
-//   const display = document.createElement("span");
-//   display.classList.add("display-date");
-//   display.innerText = `${date}`;
-
-//   return display;
-// }
-
 import { Component } from "../component";
 
 export class Navigation extends Component {
-  constructor(parentSelector, currentDate) {
+  constructor(parentSelector, currentDate, tableComponent) {
     super(parentSelector);
-    // this.tableComponent = tableComponent;
     this.currentDate = currentDate;
+    this.tableComponent = tableComponent;
     this.component.innerHTML = `<div class="btn prev-btn"></div>
         <span class="display-date">${this.currentDate.toLocaleDateString('en-US', 
         {

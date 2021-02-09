@@ -3,16 +3,39 @@ import { Component } from '../component';
 
 
 export class Table extends Component {
-  constructor(parentSelector, currentDate, rendered) {
+  constructor(parentSelector, currentDate) {
     super(parentSelector, 'table');
-    this.currentDate = currentDate;
-    this.rendered = rendered;
-    this.month = Number.parseInt(currentDate.toLocaleDateString('en-US', { month: 'numeric'}));
-    this.year = Number.parseInt(currentDate.toLocaleDateString('en-US', { year: 'numeric'}));
+    this._currentDate = currentDate;
+    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { month: 'numeric'}));
+    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { year: 'numeric'}));
     this.countDays = Utils.getDaysInMonth(this.month, this.year);
+    this.countCells = 33;
+
 
     // this.tableHeader = new TableHeader(this.component, this.month, this.year, this.countDays);
     // this.tableBody = new TableBody(this.component, this.countDays, this.month, this.year);
+  }
+
+  set currentDate (value) {
+    this._currentDate = value;
+  }
+
+  get currentDate() {
+    return this._currentDate;
+  }
+
+  updateTableHead(date) {
+    this.currentDate = date;
+
+    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { month: 'numeric'}));
+    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { year: 'numeric'}));
+    const cells = this.getCells('.cell-day');
+
+    cells.forEach(cell => {
+      cell.innerText = '';
+    });
+    
+    this.fillDaysCells(cells);
   }
 
   addRow () {
@@ -28,11 +51,9 @@ export class Table extends Component {
   }
 
   addCells(tag, className) {
-    const countCellForTeemsName = 1;
-    const countCellsForSumPD = 1;
     const cells = [];
   
-    for (let dayNumber = 1; dayNumber <= this.countDays + countCellForTeemsName + countCellsForSumPD; dayNumber++) {
+    for (let dayNumber = 1; dayNumber <= this.countCells; dayNumber++) {
       const cell = document.createElement(`${tag}`);
       if(className) {
         cell.classList.add(`${className}`);
@@ -42,7 +63,7 @@ export class Table extends Component {
   
       if(dayNumber === 1) {
         cell.classList.add("teem");
-      } else if(dayNumber === this.countDays + countCellsForSumPD + countCellForTeemsName) {
+      } else if(dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);
@@ -167,10 +188,6 @@ export class Table extends Component {
   }
 
   render() {
-    if(this.rendered) {
-      //hide/show cells
-    }
-
     const rowsForHeaderSection = 1;
 
     for (let teemNumber = 0; teemNumber < this._tableData.teams.length; teemNumber++) {
@@ -178,7 +195,7 @@ export class Table extends Component {
         const row = this.addRow();
         row.classList.add('days');
 
-       this.fillDaysCells(this.addCells('th','day')).forEach(cell => {
+       this.fillDaysCells(this.addCells('th','cell-day')).forEach(cell => {
          row.append(cell);
        })
       }
