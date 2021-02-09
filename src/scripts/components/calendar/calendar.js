@@ -1,7 +1,7 @@
 import  { Api } from '../API';
-import { Table } from "../renderCalendar";
+import { Table } from "../table";
 import { Component } from '../component';
-import { Navigation } from '../renderBar';
+import { Navigation } from '../navigation';
 
 
 export default class Calendar extends Component {

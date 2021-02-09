@@ -1,1 +1,1 @@
-export { Table } from "./renderCalendar";
+export { Table } from "./table";
