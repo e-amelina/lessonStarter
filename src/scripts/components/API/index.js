@@ -1,1 +1,1 @@
-export { getUsersFromServer } from "./API";
+export { Api } from "./API";
