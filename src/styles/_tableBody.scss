@@ -21,6 +21,9 @@ tr.Frontend-Team {
 
   &.department {
     background: rgba(155, 153, 255, 0.1);
+    width: calc(1400px - 20px);
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 
   .teem {
@@ -149,6 +152,9 @@ tr.Managers {
     border-bottom: 1px solid rgba(126, 126, 126, 0.3);
     width: calc(100% - 16px);
     left: 8px;
+    width: calc(1400px - 20px);
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }
 
