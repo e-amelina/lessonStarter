@@ -34,6 +34,13 @@ export class Table extends Component {
     cells.forEach(cell => {
       cell.innerText = '';
     });
+
+    // -----------------------------------------------
+    const hides = this.getCells('.hidden');
+    hides.forEach(hide => {
+      hide.classList.remove('hidden');
+    });
+    // -----------------------------------------------
     
     this.fillDaysCells(cells);
   }
@@ -65,6 +72,10 @@ export class Table extends Component {
         cell.classList.add("teem");
       } else if(dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
+      // -----------------------------------------------
+      } else if (dayNumber > this.countDays + 1 && dayNumber < this.countCells) {
+        cell.classList.add('hidden');
+      // -----------------------------------------------
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);
         const day = date.toLocaleDateString('en-US', {
@@ -77,8 +88,7 @@ export class Table extends Component {
       cells.push(cell);
     }
 
-    return cells
-    // row.append(cell);
+    return cells;
   }
 
   getCells(className) {
@@ -197,7 +207,7 @@ export class Table extends Component {
 
        this.fillDaysCells(this.addCells('th','cell-day')).forEach(cell => {
          row.append(cell);
-       })
+       });
       }
 
       for (let memberNumber = 0; memberNumber < this._tableData.teams[teemNumber].members.length + rowsForHeaderSection; memberNumber++) {
@@ -214,7 +224,7 @@ export class Table extends Component {
         this.fillTeemCell(memberNumber, teemNumber, cells[0], this._tableData);
         cells.forEach(cell => {
           row.append(cell);
-        })
+        });
       }      
     }
 
