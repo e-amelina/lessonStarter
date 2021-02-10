@@ -1,1 +1,0 @@
-export {createTableHeader} from "./tHeader"

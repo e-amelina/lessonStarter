@@ -1,13 +1,14 @@
-import { Utils } from '../utils';
-import { Component } from '../component';
+import {Utils} from '../utils';
+import {Component} from '../component';
+import {Modal} from "../modal";
 
 
 export class Table extends Component {
   constructor(parentSelector, currentDate) {
     super(parentSelector, 'table');
     this._currentDate = currentDate;
-    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { month: 'numeric'}));
-    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { year: 'numeric'}));
+    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', {month: 'numeric'}));
+    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', {year: 'numeric'}));
     this.countDays = Utils.getDaysInMonth(this.month, this.year);
     this.countCells = 33;
 
@@ -16,7 +17,7 @@ export class Table extends Component {
     // this.tableBody = new TableBody(this.component, this.countDays, this.month, this.year);
   }
 
-  set currentDate (value) {
+  set currentDate(value) {
     this._currentDate = value;
   }
 
@@ -27,18 +28,18 @@ export class Table extends Component {
   updateTableHead(date) {
     this.currentDate = date;
 
-    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { month: 'numeric'}));
-    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', { year: 'numeric'}));
+    this.month = Number.parseInt(this._currentDate.toLocaleDateString('en-US', {month: 'numeric'}));
+    this.year = Number.parseInt(this._currentDate.toLocaleDateString('en-US', {year: 'numeric'}));
     const cells = this.getCells('.cell-day');
 
     cells.forEach(cell => {
       cell.innerText = '';
     });
-    
+
     this.fillDaysCells(cells);
   }
 
-  addRow () {
+  addRow() {
     return this.component.insertRow();
   }
 
@@ -52,32 +53,32 @@ export class Table extends Component {
 
   addCells(tag, className) {
     const cells = [];
-  
+
     for (let dayNumber = 1; dayNumber <= this.countCells; dayNumber++) {
       const cell = document.createElement(`${tag}`);
-      if(className) {
+      if (className) {
         cell.classList.add(`${className}`);
       }
       cell.classList.add('cell');
-  
-  
-      if(dayNumber === 1) {
+
+
+      if (dayNumber === 1) {
         cell.classList.add("teem");
-      } else if(dayNumber === this.countCells) {
+      } else if (dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);
         const day = date.toLocaleDateString('en-US', {
           weekday: 'short',
         });
-        if(Utils.isWeekend(day)) {
+        if (Utils.isWeekend(day)) {
           cell.classList.add("weekend");
         }
       }
       cells.push(cell);
     }
 
-    return cells
+    return cells;
     // row.append(cell);
   }
 
@@ -85,29 +86,37 @@ export class Table extends Component {
     return document.querySelectorAll(`${className}`);
   }
 
+  modal = {
+    selectorHandler: (show, context) => show ? context.classList.add("modal-of") : context.classList.remove("modal-of")
+  }
+
   fillDaysCells(daysCells) {
-    // const daysCells = this.getCells('.day');
+    const modal = document.createElement('div');
     const button = document.createElement("BUTTON");
+    button.onclick = () => this.modal.selectorHandler(true, modal);// closure context in callback
     button.innerHTML = "&#10011; Add Vacation";
-  
-    for(let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
-      if(!cellNumber) {
+    new Modal().createModalForm(modal);
+    modal.classList.add("modal");
+    document.body.append(modal);
+    document.getElementById("cancel_modal").onclick = () => this.modal.selectorHandler(false, modal); // closure context in callback
+    for (let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
+      if (!cellNumber) {
         daysCells[cellNumber].appendChild(button);
         daysCells[cellNumber].classList.add("cell-button");
-      } else if(cellNumber === daysCells.length-1) {
+      } else if (cellNumber === daysCells.length - 1) {
         daysCells[cellNumber].innerText = 'Sum';
         daysCells[cellNumber].classList.add("cell-sum");
       } else {
         const date = new Date(this.year, this.month - 1, cellNumber);
         const contentCellDay = document.createElement("span");
         contentCellDay.classList.add("day");
-        contentCellDay.innerText = `${date.toLocaleDateString('en-US', { weekday: 'short' })}`;
+        contentCellDay.innerText = `${date.toLocaleDateString('en-US', {weekday: 'short'})}`;
         daysCells[cellNumber].append(contentCellDay);
-  
-        
+
+
         const contentCellNumberDay = document.createElement("span");
         contentCellNumberDay.classList.add("date");
-        contentCellNumberDay.innerText = `${date.toLocaleDateString('en-US', { day: 'numeric'})}`;
+        contentCellNumberDay.innerText = `${date.toLocaleDateString('en-US', {day: 'numeric'})}`;
         daysCells[cellNumber].append(contentCellNumberDay);
       }
     }
@@ -116,74 +125,74 @@ export class Table extends Component {
   }
 
   fillTeemCell(memberNumber, teemNumber, cell, teemsData) {
-    if(!memberNumber){
+    if (!memberNumber) {
       cell.append(this.fillCellInformationAboutTeem(teemsData, teemNumber));
     } else {
-      cell.innerText = `${teemsData.teams[teemNumber].members[memberNumber-1].name}`;
+      cell.innerText = `${teemsData.teams[teemNumber].members[memberNumber - 1].name}`;
     }
 
     return cell;
   }
 
-  fillCellInformationAboutTeem( teemsData, teemNumber) {
+  fillCellInformationAboutTeem(teemsData, teemNumber) {
     const wrap = document.createElement("div");
     wrap.classList.add("teem__info");
-  
+
     const teemName = document.createElement("span");
     teemName.classList.add("teem__name");
     teemName.innerText = teemsData.teams[teemNumber].name;
     wrap.append(teemName);
-    
+
     const countMembersTeem = document.createElement("span");
     countMembersTeem.classList.add("teem__count-members");
     countMembersTeem.innerText = teemsData.teams[teemNumber].members.length;
     wrap.append(countMembersTeem);
-  
+
     const percentageOfAbsent = document.createElement("span");
     percentageOfAbsent.classList.add("teem__percentage-absent");
     percentageOfAbsent.innerText = ` ${teemsData.teams[teemNumber].percentageOfAbsent[this.month]}%`;
     wrap.append(percentageOfAbsent);
-  
+
     const hideMembers = document.createElement("span");
     hideMembers.classList.add("teem__btn--hide");
     hideMembers.addEventListener("click", (e) => {
-      
-      if(hideMembers.parentNode.parentElement.parentElement.classList.contains('close')){
-  
-        for(let t = 0; t < teemsData.teams.length; t++) {
-          if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+
+      if (hideMembers.parentNode.parentElement.parentElement.classList.contains('close')) {
+
+        for (let t = 0; t < teemsData.teams.length; t++) {
+          if (hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
             const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
-  
+
             hiddenElem.forEach(elem => {
-              if(!elem.classList.contains('close')) {
+              if (!elem.classList.contains('close')) {
                 elem.classList.remove('hidden');
               }
             });
           }
-        
+
         }
         hideMembers.parentNode.parentElement.parentElement.classList.remove('close');
-  
+
       } else {
         hideMembers.parentNode.parentElement.parentElement.classList.add('close');
-  
-        for(let t = 0; t < teemsData.teams.length; t++) {
-          if(hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
+
+        for (let t = 0; t < teemsData.teams.length; t++) {
+          if (hideMembers.parentNode.parentElement.parentElement.classList.contains(`${(teemsData.teams[t].name).split(' ').join('-')}`)) {
             const hiddenElem = document.querySelectorAll(`.${(teemsData.teams[t].name).split(' ').join('-')}`);
-  
+
             hiddenElem.forEach(elem => {
-              if(!elem.classList.contains('close')) {
+              if (!elem.classList.contains('close')) {
                 elem.classList.add('hidden');
               }
             });
-          } 
+          }
         }
       }
-  
+
     });
-  
+
     wrap.append(hideMembers);
-  
+
     return wrap;
   }
 
@@ -191,20 +200,20 @@ export class Table extends Component {
     const rowsForHeaderSection = 1;
 
     for (let teemNumber = 0; teemNumber < this._tableData.teams.length; teemNumber++) {
-      if(!teemNumber) {
+      if (!teemNumber) {
         const row = this.addRow();
         row.classList.add('days');
 
-       this.fillDaysCells(this.addCells('th','cell-day')).forEach(cell => {
-         row.append(cell);
-       })
+        this.fillDaysCells(this.addCells('th', 'cell-day')).forEach(cell => {
+          row.append(cell);
+        });
       }
 
       for (let memberNumber = 0; memberNumber < this._tableData.teams[teemNumber].members.length + rowsForHeaderSection; memberNumber++) {
         const row = this.addRow();
         row.classList.add(`${(this._tableData.teams[teemNumber].name).split(' ').join('-')}`);
-  
-        if(memberNumber === 0 ) {
+
+        if (memberNumber === 0) {
           row.classList.add("department");
         }
         if (memberNumber === this._tableData.teams[teemNumber].members.length + rowsForHeaderSection - 1) {
@@ -214,8 +223,8 @@ export class Table extends Component {
         this.fillTeemCell(memberNumber, teemNumber, cells[0], this._tableData);
         cells.forEach(cell => {
           row.append(cell);
-        })
-      }      
+        });
+      }
     }
 
     super.render();
