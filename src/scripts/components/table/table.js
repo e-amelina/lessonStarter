@@ -38,6 +38,7 @@ export class Table extends Component {
         cell.classList.add(`${className}`);
       }
       cell.classList.add('cell');
+
   
   
       if(dayNumber === 1) {
@@ -56,7 +57,7 @@ export class Table extends Component {
       cells.push(cell);
     }
 
-    return cells
+    return cells;
     // row.append(cell);
   }
 
@@ -99,6 +100,7 @@ export class Table extends Component {
       cell.append(this.fillCellInformationAboutTeem(teemsData, teemNumber));
     } else {
       cell.innerText = `${teemsData.teams[teemNumber].members[memberNumber-1].name}`;
+      cell.innerHTML += `<div class="last-row__cell"></div>`;
     }
 
     return cell;
@@ -180,7 +182,7 @@ export class Table extends Component {
 
        this.fillDaysCells(this.addCells('th','day')).forEach(cell => {
          row.append(cell);
-       })
+       });
       }
 
       for (let memberNumber = 0; memberNumber < this._tableData.teams[teemNumber].members.length + rowsForHeaderSection; memberNumber++) {
@@ -194,10 +196,21 @@ export class Table extends Component {
           row.classList.add("last-row");
         }
         const cells = this.addCells('td');
+        if (row.classList.contains("department")) {
+          cells.forEach(cell => {
+            row.append(cell);
+            cell.innerHTML = `<div class="department__cell"></div>`;
+          });
+        } else if (row.classList.contains("last-row")) {
+          cells.forEach(cell => {
+            row.append(cell);
+            cell.innerHTML = `<div class="last-row__cell"></div>`;
+          });
+        } 
         this.fillTeemCell(memberNumber, teemNumber, cells[0], this._tableData);
         cells.forEach(cell => {
           row.append(cell);
-        })
+        });
       }      
     }
 

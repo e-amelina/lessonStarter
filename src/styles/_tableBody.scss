@@ -3,15 +3,16 @@ tr.department {
   font-size: 12px;
   line-height: 17px;
   display: table-row;
-
-  &:not(:first-child) {
-    &::after {
-      content: " ";
-      display: block;
+ 
+  td {
+    position: relative;
+    .department__cell {
       position: absolute;
-      border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-      width: calc(100% - 16px);
-      left: 8px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: red;
     }
   }
 }
@@ -135,39 +136,51 @@ tr.Managers {
 
 .last-row {
   border-bottom: 33px solid #fff;
+  position: relative;
+  &__cell {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: red;
+  }
 
   td {
     position: relative;
     z-index: 3;
+    // &::after {
+
+    // }
   }
 
-  &::after {
-    content: " ";
-    display: block;
-    position: absolute;
-    height: 35px;
-    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-    width: calc(100% - 16px);
-    left: 8px;
-    width: calc(1400px - 20px);
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
+  // &::after {
+  //   content: " ";
+  //   display: block;
+  //   position: absolute;
+  //   height: 35px;
+  //   border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+  //   width: calc(100% - 16px);
+  //   left: 8px;
+  //   width: calc(1400px - 20px);
+  //   left: 50%;
+  //   transform: translate(-50%, 0);
+  // }
 }
 
 tr.close.department {
   border-bottom: 33px solid #fff;
 
-  &::after {
-    content: " ";
-    display: block;
-    position: absolute;
-    height: 34px;
-    border-top: 1px solid rgba(126, 126, 126, 0.3);
-    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-    width: calc(100% - 16px);
-    left: 8px;
-  }
+  // &::after {
+  //   content: " ";
+  //   display: block;
+  //   position: absolute;
+  //   height: 34px;
+  //   border-top: 1px solid rgba(126, 126, 126, 0.3);
+  //   border-bottom: 1px solid rgba(126, 126, 126, 0.3);
+  //   width: calc(100% - 16px);
+  //   left: 8px;
+  // }
 }
 
 .close .teem__info .teem__btn--hide {
