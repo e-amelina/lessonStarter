@@ -1,13 +1,17 @@
-const currentDate = new Date()
-export function isWeekend (date) {
-  if(date.getDay() === 0 || date.getDay() === 6) {
+export class Utils {
 
-    return true;
+  static isWeekend (date) {
+    if(date === 'Sun' || date === 'Sat') {
+  
+      return true;
+    }
+  
+    return false;
   }
 
-  return false;
+  static getDaysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+  }
+
 }
 
-export function getDaysInMonth(month, year) {
-  return new Date(year, month + 1, 0).getDate();
-}

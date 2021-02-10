@@ -1,0 +1,35 @@
+.cell {
+  button {
+    background: #48ba46;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    width: 145px;
+    height: 40px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: #fff;
+      color: #48ba46;
+      border: 1px solid rgba(126, 126, 126, 0.3);
+    }
+  }
+
+  &-button {
+    position: relative;
+    border-top: none;
+    border-left: none;
+
+    &:hover {
+      cursor: default;
+      background: #fff;
+    }
+  }
+}
