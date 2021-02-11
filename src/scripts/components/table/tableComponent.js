@@ -26,11 +26,10 @@ export default class TableComponent extends Component {
   addHidden(suitableCells) {
     const cells = [];
     for (let day = 1; day < this.countCells; day++) {
-      const cell = suitableCells;
-      if (Utils.hiddenDays(day, this.countDays, this.countCells)) {
-        cell.classList.add("hidden");
+      if (Utils.hiddenDays(suitableCells[day], this.countDays, this.countCells)) {
+        suitableCells[day].classList.add("hidden");
       }
-      cells.push(cell);
+      cells.push(suitableCells[day]);
     }
     return cells;
   }
