@@ -6,16 +6,14 @@ export class Navigation extends Component {
     this.currentDate = currentDate;
     this.tableComponent = tableComponent;
     this.component.innerHTML = `<div class="btn prev-btn"></div>
-        <span class="display-date">${this.currentDate.toLocaleDateString('en-US', 
-        {
-          year: 'numeric',
-          month: 'long',
-        }
-        )}</span>
+        <span class="display-date">${this.currentDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+        })}</span>
         <div class="btn next-btn"></div>`;
     this.component.querySelector(".prev-btn").addEventListener("click", this.prevMonth.bind(this));
     this.component.querySelector(".next-btn").addEventListener("click", this.nextMonth.bind(this));
-    this.component.classList.add("display-date"); 
+    this.component.classList.add("display-date");
   }
 
   prevMonth() {
@@ -31,17 +29,13 @@ export class Navigation extends Component {
   }
 
   updateMonth(newDate) {
-    this.component.querySelector(".display-date").textContent = newDate.toLocaleDateString('en-US', 
-    {
-      year: 'numeric',
-      month: 'long',
-    }
-    );
+    this.component.querySelector(".display-date").textContent = newDate.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+    });
   }
 
   render() {
     super.render();
   }
 }
-
-

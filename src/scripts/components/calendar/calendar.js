@@ -1,8 +1,7 @@
-import  { Api } from '../API';
+import { Api } from "../API";
 import { Table } from "../table";
-import { Component } from '../component';
-import { Navigation } from '../navigation';
-
+import { Component } from "../component";
+import { Navigation } from "../navigation";
 
 export default class Calendar extends Component {
   constructor(parentSelector) {
@@ -14,16 +13,11 @@ export default class Calendar extends Component {
   }
 
   render() {
-    Api
-      .getUsers()
-      .then(response => {
-        this.table.tableData = response;
-        this.navigation.render();
-        this.table.render();
-        super.render();
-      })
-      .catch(error => {
-        console.log('Error from get users', error);
-      });
+    Api.getUsers().then((response) => {
+      this.table.tableData = response;
+      this.navigation.render();
+      this.table.render();
+      super.render();
+    });
   }
 }
