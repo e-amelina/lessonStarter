@@ -37,7 +37,7 @@ export default class TableComponent extends Component {
 
   saveCells(cells) {
     const savedCells = [];
-    for (let cellNumber = 1; cellNumber < cells.length - 1; cellNumber++) {
+    for (let cellNumber = 0; cellNumber < cells.length - 1; cellNumber++) {
       if (cellNumber !== cells.length - 1) {
         savedCells.push(cells[cellNumber]);
       }
@@ -68,6 +68,8 @@ export default class TableComponent extends Component {
         });
         if (Utils.isWeekend(day)) {
           cell.classList.add("weekend");
+        // } else {
+        //   cell.classList.remove("weekend");
         }
       }
       cells.push(cell);

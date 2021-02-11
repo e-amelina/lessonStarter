@@ -21,10 +21,10 @@ export default class TableHeader extends TableComponent {
     this.year = year;
     this.fillDaysCells(this.cells);
 
-    const weekends = this.getCells(".weekend");
-    weekends.forEach((weekend) => {
-      weekend.classList.remove("weekend");
-    });
+    // const weekends = this.getCells(".weekend");
+    // weekends.forEach((weekend) => {
+    //   weekend.classList.remove("weekend");
+    // });
 
     super.removeHidden();
     super.addHidden(this.cells);
@@ -42,6 +42,10 @@ export default class TableHeader extends TableComponent {
       } else if (cellNumber === daysCells.length - 1) {
         currentDay.textContent = "Sum";
         currentDay.classList.add("cell-sum");
+      } else if (Utils.hiddenDays(cellNumber, this.countDays, this.countCells)) {
+        currentDay.classList.add('hidden');
+      // } else if (!Utils.hiddenDays(cellNumber+1, this.countDays, this.countCells)){
+      //   currentDay.classList.remove('hidden');
       } else {
         const date = new Date(this.year, this.month - 1, cellNumber);
         const contentCellDay = document.createElement("span");
@@ -50,6 +54,8 @@ export default class TableHeader extends TableComponent {
         contentCellDay.textContent = weekdayName;
         if (Utils.isWeekend(weekdayName)) {
           currentDay.classList.add("weekend");
+        } else {
+          currentDay.classList.remove("weekend");
         }
         currentDay.append(contentCellDay);
 
