@@ -1,17 +1,13 @@
-export class Utils {
 
-  static isWeekend (date) {
-    if(date === 'Sun' || date === 'Sat') {
-  
-      return true;
-    }
-  
-    return false;
+export function isWeekend (date) {
+  if(date.getDay() === 0 || date.getDay() === 6) {
+
+    return true;
   }
 
-  static getDaysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
-  }
-
+  return false;
 }
 
+export function getDaysInMonth(month, year) {
+  return new Date(year, month + 1, 0).getDate();
+}

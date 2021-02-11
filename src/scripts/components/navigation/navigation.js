@@ -21,13 +21,13 @@ export class Navigation extends Component {
   prevMonth() {
     this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 0);
     this.updateMonth(this.currentDate);
-    this.tableComponent.updateTableHead(this.currentDate);
+    this.tableComponent.updateTable(this.currentDate);
   }
 
   nextMonth() {
     this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 1);
     this.updateMonth(this.currentDate);
-    this.tableComponent.updateTableHead(this.currentDate);
+    this.tableComponent.updateTable(this.currentDate);
   }
 
   updateMonth(newDate) {
