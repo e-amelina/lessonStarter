@@ -1,4 +1,6 @@
 import TableComponent from "./tableComponent";
+import { Utils } from "../utils";
+
 
 export default class TableHeader extends TableComponent {
   constructor(parentSelector, month, year, countDays) {
@@ -12,25 +14,31 @@ export default class TableHeader extends TableComponent {
   fillDaysCells(daysCells) {
     const button = document.createElement("BUTTON");
     button.innerHTML = "&#10011; Add Vacation";
-
-    for (let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
-      if (!cellNumber) {
-        daysCells[cellNumber].append(button);
-        daysCells[cellNumber].classList.add("cell-button");
-      } else if (cellNumber === daysCells.length - 1) {
-        daysCells[cellNumber].textContent = "Sum";
-        daysCells[cellNumber].classList.add("cell-sum");
+  
+    for(let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
+      const curDay = daysCells[cellNumber];
+      if(!cellNumber) {
+        curDay.appendChild(button);
+        curDay.classList.add("cell-button");
+      } else if(cellNumber === daysCells.length-1) {
+        curDay.innerText = 'Sum';
+        curDay.classList.add("cell-sum");
       } else {
         const date = new Date(this.year, this.month - 1, cellNumber);
         const contentCellDay = document.createElement("span");
         contentCellDay.classList.add("day");
-        contentCellDay.textContent = `${date.toLocaleDateString("en-US", { weekday: "short" })}`;
-        daysCells[cellNumber].append(contentCellDay);
-
+        const weekdayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        contentCellDay.innerText = weekdayName;
+        if(Utils.isWeekend(weekdayName)) {
+          curDay.classList.add("weekend");
+        } 
+        curDay.append(contentCellDay);
+  
+        
         const contentCellNumberDay = document.createElement("span");
         contentCellNumberDay.classList.add("date");
-        contentCellNumberDay.textContent = `${date.toLocaleDateString("en-US", { day: "numeric" })}`;
-        daysCells[cellNumber].append(contentCellNumberDay);
+        contentCellNumberDay.innerText = `${date.toLocaleDateString('en-US', { day: 'numeric'})}`;
+        curDay.append(contentCellNumberDay);
       }
     }
 
