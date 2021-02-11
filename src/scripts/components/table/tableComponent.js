@@ -16,6 +16,35 @@ export default class TableComponent extends Component {
     return row;
   }
 
+  removeHidden() {
+    const hides = this.getCells(".hidden");
+    hides.forEach((hide) => {
+      hide.classList.remove("hidden");
+    });
+  }
+
+  addHidden(suitableCells) {
+    const cells = [];
+    for (let day = 1; day < this.countCells; day++) {
+      const cell = suitableCells;
+      if (Utils.hiddenDays(day, this.countDays, this.countCells)) {
+        cell.classList.add("hidden");
+      }
+      cells.push(cell);
+    }
+    return cells;
+  }
+
+  saveCells(cells) {
+    const savedCells = [];
+    for (let cellNumber = 1; cellNumber < cells.length - 1; cellNumber++) {
+      if (cellNumber !== cells.length - 1) {
+        savedCells.push(cells[cellNumber]);
+      }
+    }
+    return savedCells;
+  }
+
   addCells(tag, className) {
     const cells = [];
 
@@ -31,7 +60,7 @@ export default class TableComponent extends Component {
       } else if (dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
       } else if (Utils.hiddenDays(dayNumber, this.countDays, this.countCells)) {
-        cell.classList.add('hidden');
+        cell.classList.add("hidden");
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);
         const day = date.toLocaleDateString("en-US", {

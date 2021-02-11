@@ -1,7 +1,6 @@
 import TableComponent from "./tableComponent";
 import { Utils } from "../utils";
 
-
 export default class TableHeader extends TableComponent {
   constructor(parentSelector, month, year, countDays) {
     super(parentSelector, "thead");
@@ -9,36 +8,55 @@ export default class TableHeader extends TableComponent {
     this.month = month;
     this.year = year;
     this.countDays = countDays;
+
+    this.cells = [];
+  }
+
+  update(month, year) {
+    this.cells.forEach((cell) => {
+      cell.textContent = "";
+    });
+
+    this.month = month;
+    this.year = year;
+    this.fillDaysCells(this.cells);
+
+    const weekends = this.getCells(".weekend");
+    weekends.forEach((weekend) => {
+      weekend.classList.remove("weekend");
+    });
+
+    super.removeHidden();
+    super.addHidden(this.cells);
   }
 
   fillDaysCells(daysCells) {
     const button = document.createElement("BUTTON");
     button.innerHTML = "&#10011; Add Vacation";
-  
-    for(let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
-      const curDay = daysCells[cellNumber];
-      if(!cellNumber) {
-        curDay.appendChild(button);
-        curDay.classList.add("cell-button");
-      } else if(cellNumber === daysCells.length-1) {
-        curDay.innerText = 'Sum';
-        curDay.classList.add("cell-sum");
+
+    for (let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
+      const currentDay = daysCells[cellNumber];
+      if (!cellNumber) {
+        currentDay.append(button);
+        currentDay.classList.add("cell-button");
+      } else if (cellNumber === daysCells.length - 1) {
+        currentDay.textContent = "Sum";
+        currentDay.classList.add("cell-sum");
       } else {
         const date = new Date(this.year, this.month - 1, cellNumber);
         const contentCellDay = document.createElement("span");
         contentCellDay.classList.add("day");
-        const weekdayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-        contentCellDay.innerText = weekdayName;
-        if(Utils.isWeekend(weekdayName)) {
-          curDay.classList.add("weekend");
-        } 
-        curDay.append(contentCellDay);
-  
-        
+        const weekdayName = date.toLocaleDateString("en-US", { weekday: "short" });
+        contentCellDay.textContent = weekdayName;
+        if (Utils.isWeekend(weekdayName)) {
+          currentDay.classList.add("weekend");
+        }
+        currentDay.append(contentCellDay);
+
         const contentCellNumberDay = document.createElement("span");
         contentCellNumberDay.classList.add("date");
-        contentCellNumberDay.innerText = `${date.toLocaleDateString('en-US', { day: 'numeric'})}`;
-        curDay.append(contentCellNumberDay);
+        contentCellNumberDay.textContent = `${date.toLocaleDateString("en-US", { day: "numeric" })}`;
+        currentDay.append(contentCellNumberDay);
       }
     }
 
@@ -47,7 +65,9 @@ export default class TableHeader extends TableComponent {
 
   createHeader() {
     const row = super.addRow("days");
-    this.fillDaysCells(super.addCells("th", "cell-day")).forEach((cell) => {
+    const cellsArray = super.addCells("th", "cell-day");
+    this.cells = super.saveCells(cellsArray);
+    this.fillDaysCells(cellsArray).forEach((cell) => {
       row.append(cell);
     });
   }

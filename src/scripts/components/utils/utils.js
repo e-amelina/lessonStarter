@@ -10,11 +10,10 @@ export class Utils {
     return new Date(year, month, 0).getDate();
   }
 
-  static hiddenDays (cellNumber, daysInMonth, allCells) {
-    if (cellNumber > daysInMonth + 1 && cellNumber < allCells ) {
+  static hiddenDays(cellNumber, daysInMonth, allCells) {
+    if (cellNumber > daysInMonth + 1 && cellNumber < allCells) {
       return true;
     }
     return false;
   }
-
 }

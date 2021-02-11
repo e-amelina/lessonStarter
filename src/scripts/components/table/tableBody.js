@@ -6,6 +6,8 @@ export default class TableBody extends TableComponent {
     this.countDays = countDays;
     this.month = month;
     this.year = year;
+
+    this.cells = [];
   }
 
   set tableBodyData(value) {
@@ -85,18 +87,20 @@ export default class TableBody extends TableComponent {
 
     for (let memberNumber = 0; memberNumber < teamData.members.length + rowsForHeaderSection; memberNumber++) {
       const row = super.addRow(`${teamData.name.split(" ").join("-")}`);
+      const cells = this.addCells("td");
+
+      this.cells.push(super.saveCells(cells));
+      this.fillTeemCell(memberNumber, cells[0], teamData);
 
       if (memberNumber === 0) {
         row.classList.add("department");
+        this.createBorder(cells);
       }
 
       if (memberNumber === teamData.members.length + rowsForHeaderSection - 1) {
         row.classList.add("last-row");
+        this.createBorder(cells);
       }
-
-      const cells = this.addCells("td");
-      this.createBorder(cells);
-      this.fillTeemCell(memberNumber, cells[0], teamData);
       cells.forEach((cell) => {
         row.append(cell);
       });
