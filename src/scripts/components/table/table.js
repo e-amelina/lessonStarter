@@ -30,11 +30,41 @@ export class Table extends Component {
     this.year = Number.parseInt(this._currentDate.toLocaleDateString("en-US", { year: "numeric" }), 10);
     // const cells = this.getCells(".cell-day");
 
+    const cell = this.getCells('.cell');
+
+
     // cells.forEach((cell) => {
     //   cell.textContent = "";
     // });
 
     // this.fillDaysCells(cells);
+    const weekends = this.getCells('.weekend');
+    weekends.forEach(weekend => {
+      weekend.classList.remove('weekend');
+    });
+    this.removeHidden();
+    this.addHidden(cell);
+
+  }
+
+  removeHidden() {
+    const hides = this.getCells('.hidden');
+    hides.forEach(hide => {
+      hide.classList.remove('hidden');
+    });
+  }
+
+  addHidden(suitableCells) {
+    const cells = [];
+    for (let day = 1; day < this.countCells; day++) {
+      const cell = suitableCells;
+      console.log(day);
+      if (Utils.hiddenDays(day, this.countDays, this.countCells)) {
+        cell.classList.add('hidden');
+      } 
+      cells.push(cell);
+    }
+    return cells;
   }
 
   set tableData(value) {
