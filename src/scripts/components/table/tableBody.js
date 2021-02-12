@@ -72,6 +72,11 @@ export default class TableBody extends TableComponent {
         if (day.month === this.month) {
           for (let paidDay = day.startDay; paidDay <= day.endDay; paidDay++) {
             cells[paidDay].classList.add("paid-day");
+            if (paidDay == day.startDay) {
+              cells[paidDay].classList.add("paid-day-first");
+            } else if (paidDay == day.endDay) {
+              cells[paidDay].classList.add("paid-day-last");
+            }
           }
         }
       });
