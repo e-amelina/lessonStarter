@@ -34,8 +34,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  saveCells(cells) {
+  static saveCells(cells) {
     const savedCells = [];
     for (let cellNumber = 0; cellNumber < cells.length - 1; cellNumber++) {
       if (cellNumber !== cells.length - 1) {
@@ -76,8 +75,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getCells(className) {
+  static getCells(className) {
     return document.querySelectorAll(`${className}`);
   }
 

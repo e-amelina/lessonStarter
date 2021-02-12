@@ -89,8 +89,7 @@ export default class TableBody extends TableComponent {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getPaidDays(vacations) {
+  static getPaidDays(vacations) {
     const paidDays = [];
     vacations.forEach((vacation) => {
       paidDays.push({
@@ -182,8 +181,7 @@ export default class TableBody extends TableComponent {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  createBorder(cells) {
+  static createBorder(cells) {
     cells.forEach((cell) => {
       const container = document.createElement("div");
       container.classList.add("last-row__cell");
