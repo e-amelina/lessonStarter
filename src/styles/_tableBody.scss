@@ -24,6 +24,11 @@ tr.Frontend-Team {
     background: rgba(155, 153, 255, 0.1);
   }
 
+  &>.paid-day {
+    background-color: $fronend;
+    border-color: $fronend;
+  }
+
   .teem {
     &__percentage-absent {
       background: $fronend;
@@ -38,6 +43,11 @@ tr.Backend-Team {
     background: rgba(255, 153, 153, 0.1);
   }
 
+  &>.paid-day {
+    background-color: $backend;
+    border-color: $backend;
+  }
+
   .teem {
     &__percentage-absent {
       background: $backend;
@@ -50,6 +60,11 @@ tr.Designers {
 
   &.department {
     background: rgba(122, 175, 255, 0.1);
+  }
+
+  &>.paid-day {
+    background-color: $designers;
+    border-color: $designers;
   }
 
   .teem {
@@ -194,4 +209,9 @@ tr.close.department {
 
 .hidden {
   display: none;
+}
+
+.paid-day {
+  background-color: blueviolet;
+  border-color: blueviolet;
 }

@@ -28,8 +28,10 @@ export class Table extends Component {
 
     this.month = Number.parseInt(this._currentDate.toLocaleDateString("en-US", { month: "numeric" }), 10);
     this.year = Number.parseInt(this._currentDate.toLocaleDateString("en-US", { year: "numeric" }), 10);
+    this.countDays = Utils.getDaysInMonth(this.month, this.year);
 
-    this.tableHeader.update(this.month, this.year);
+    this.tableHeader.update(this.month, this.year, this.countDays);
+    this.tableBody.update(this.month, this.year, this.countDays);
   }
 
   set tableData(value) {

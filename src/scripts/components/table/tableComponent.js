@@ -26,18 +26,17 @@ export default class TableComponent extends Component {
   addHidden(suitableCells) {
     const cells = [];
     for (let day = 1; day < this.countCells; day++) {
-      const cell = suitableCells;
-      if (Utils.hiddenDays(day, this.countDays, this.countCells)) {
-        cell.classList.add("hidden");
+      if (Utils.hiddenDays(suitableCells[day], this.countDays, this.countCells)) {
+        suitableCells[day].classList.add("hidden");
       }
-      cells.push(cell);
+      cells.push(suitableCells[day]);
     }
     return cells;
   }
 
   saveCells(cells) {
     const savedCells = [];
-    for (let cellNumber = 1; cellNumber < cells.length - 1; cellNumber++) {
+    for (let cellNumber = 0; cellNumber < cells.length - 1; cellNumber++) {
       if (cellNumber !== cells.length - 1) {
         savedCells.push(cells[cellNumber]);
       }
@@ -59,7 +58,7 @@ export default class TableComponent extends Component {
         cell.classList.add("teem");
       } else if (dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
-      } else if (Utils.hiddenDays(dayNumber, this.countDays, this.countCells)) {
+      } else if (Utils.hiddenDays(dayNumber - 1, this.countDays, this.countCells)) {
         cell.classList.add("hidden");
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);

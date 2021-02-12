@@ -1,4 +1,5 @@
 import TableComponent from "./tableComponent";
+import { Utils } from "../utils";
 
 export default class TableBody extends TableComponent {
   constructor(parentSelector, countDays, month, year) {
@@ -18,6 +19,32 @@ export default class TableBody extends TableComponent {
     return this._tableBodyData;
   }
 
+  update(month, year, countDays) {
+    this.countDays = countDays;
+    this.month = month;
+    this.year = year;
+    this.countDays = countDays;
+    this.deletePaidDays();
+    this.addPaidDays();
+
+    for(let cell = 0; cell < this.cells.length; cell++) {
+        const rowCell = this.cells[cell];
+
+        for(let cellNumber = rowCell.length-1; cellNumber > this.countDays; cellNumber-- ) {
+            rowCell[cellNumber].classList.add("hidden");
+        }
+
+        for(let cellN = 1; cellN < rowCell.length; cellN++) {
+            const date = new Date(this.year, this.month - 1, cellN);
+            const weekdayName = date.toLocaleDateString("en-US", { weekday: "short" });
+            if (Utils.isWeekend(weekdayName)) {
+                rowCell[cellN].classList.add("weekend");
+              }
+        }
+    }
+
+  }
+
   fillTeemCell(memberNumber, cell, teemData) {
     if (!memberNumber) {
       cell.append(this.fillCellInformationAboutTeem(teemData));
@@ -26,6 +53,49 @@ export default class TableBody extends TableComponent {
     }
 
     return cell;
+  }
+
+  addPaidDays() {
+    let rowNumber = 1;
+    for (let teamNumber = 0; teamNumber < this._tableBodyData.teams.length; teamNumber++) {
+      this.addPaidDaysForTeem(this._tableBodyData.teams[teamNumber], rowNumber);
+      rowNumber += this._tableBodyData.teams[teamNumber].members.length + 1;
+    }
+  }
+
+  addPaidDaysForTeem(teamData, rowNumber) {
+    let row = rowNumber;
+    for (let memberNumber = 0; memberNumber < teamData.members.length; memberNumber++, row++) {
+      const cells = this.cells[row];
+      const paidDays = this.getPaidDays(teamData.members[memberNumber].vacations);
+      paidDays.forEach((day) => {
+        if (day.month === this.month) {
+          for (let paidDay = day.startDay; paidDay <= day.endDay; paidDay++) {
+            cells[paidDay].classList.add("paid-day");
+          }
+        }
+      });
+    }
+  }
+
+  deletePaidDays() {
+    const paidDays = this.getCells(".paid-day");
+    paidDays.forEach((paidDay) => {
+      paidDay.classList.remove("paid-day");
+    });
+  }
+
+  getPaidDays(vacations) {
+    const paidDays = [];
+    vacations.forEach((vacation) => {
+      paidDays.push({
+        startDay: Number.parseInt(vacation.startDate.split(".")[0], 10),
+        month: Number.parseInt(vacation.startDate.split(".")[1], 10),
+        endDay: Number.parseInt(vacation.endDate.split(".")[0], 10),
+      });
+    });
+
+    return paidDays;
   }
 
   fillCellInformationAboutTeem(teamData) {
@@ -123,6 +193,7 @@ export default class TableBody extends TableComponent {
 
   render() {
     this.createBody();
+    this.addPaidDays();
     super.render();
   }
 }

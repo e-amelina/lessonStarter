@@ -11,7 +11,7 @@ export class Utils {
   }
 
   static hiddenDays(cellNumber, daysInMonth, allCells) {
-    if (cellNumber > daysInMonth + 1 && cellNumber < allCells) {
+    if (cellNumber > daysInMonth && cellNumber < allCells) {
       return true;
     }
     return false;
