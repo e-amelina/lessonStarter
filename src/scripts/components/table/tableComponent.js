@@ -34,6 +34,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   saveCells(cells) {
     const savedCells = [];
     for (let cellNumber = 0; cellNumber < cells.length - 1; cellNumber++) {
@@ -67,8 +68,6 @@ export default class TableComponent extends Component {
         });
         if (Utils.isWeekend(day)) {
           cell.classList.add("weekend");
-        // } else {
-        //   cell.classList.remove("weekend");
         }
       }
       cells.push(cell);
@@ -77,6 +76,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getCells(className) {
     return document.querySelectorAll(`${className}`);
   }

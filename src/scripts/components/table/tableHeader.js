@@ -16,6 +16,7 @@ export default class TableHeader extends TableComponent {
     super.removeHidden();
 
     this.cells.forEach((cell) => {
+      // eslint-disable-next-line no-param-reassign
       cell.textContent = "";
     });
 
