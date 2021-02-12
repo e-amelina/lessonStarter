@@ -1,0 +1,30 @@
+.calendarBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.prev-btn {
+  background: url(../assets/img/leftArrow.png) no-repeat center;
+}
+
+.next-btn {
+  background: url(../assets/img/rightArrow.png) no-repeat center;
+}
+
+.display-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  min-width: 120px;
+}

@@ -1,1 +1,0 @@
-export { renderCalendar } from "./renderCalendar";
