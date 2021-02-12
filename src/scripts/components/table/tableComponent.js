@@ -34,7 +34,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
-  static saveCells(cells) {
+  saveCells(cells) {
     const savedCells = [];
     for (let cellNumber = 0; cellNumber < cells.length - 1; cellNumber++) {
       if (cellNumber !== cells.length - 1) {
@@ -75,7 +75,7 @@ export default class TableComponent extends Component {
     return cells;
   }
 
-  static getCells(className) {
+  getCells(className) {
     return document.querySelectorAll(`${className}`);
   }
 

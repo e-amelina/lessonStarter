@@ -3,16 +3,17 @@ tr.department {
   font-size: 12px;
   line-height: 17px;
   display: table-row;
- 
+
   td {
     position: relative;
+
     .department__cell {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 1px;
-      background:  rgba(126, 126, 126, 0.3);
+      background: rgba(126, 126, 126, 0.3);
     }
   }
 }
@@ -24,7 +25,7 @@ tr.Frontend-Team {
     background: rgba(155, 153, 255, 0.1);
   }
 
-  &>.paid-day {
+  & > .paid-day {
     background-color: $fronend;
     border-color: $fronend;
   }
@@ -43,7 +44,7 @@ tr.Backend-Team {
     background: rgba(255, 153, 153, 0.1);
   }
 
-  &>.paid-day {
+  & > .paid-day {
     background-color: $backend;
     border-color: $backend;
   }
@@ -62,7 +63,7 @@ tr.Designers {
     background: rgba(122, 175, 255, 0.1);
   }
 
-  &>.paid-day {
+  & > .paid-day {
     background-color: $designers;
     border-color: $designers;
   }
@@ -152,53 +153,26 @@ tr.Managers {
 .last-row {
   border-bottom: 33px solid #fff;
   position: relative;
+
   &__cell {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    // height: 1px;
     height: 34px;
     z-index: 1;
     border-top: 1px solid rgba(126, 126, 126, 0.3);
-    border-bottom: 1px solid rgba(126, 126, 126, 0.3);  
+    border-bottom: 1px solid rgba(126, 126, 126, 0.3);
   }
 
   td {
     position: relative;
     z-index: 3;
-    // &::after {
-
-    // }
   }
-
-  // &::after {
-  //   content: " ";
-  //   display: block;
-  //   position: absolute;
-  //   height: 35px;
-  //   border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-  //   width: calc(100% - 16px);
-  //   left: 8px;
-  //   width: calc(1400px - 20px);
-  //   left: 50%;
-  //   transform: translate(-50%, 0);
-  // }
 }
 
 tr.close.department {
   border-bottom: 33px solid #fff;
-
-  // &::after {
-  //   content: " ";
-  //   display: block;
-  //   position: absolute;
-  //   height: 34px;
-  //   border-top: 1px solid rgba(126, 126, 126, 0.3);
-  //   border-bottom: 1px solid rgba(126, 126, 126, 0.3);
-  //   width: calc(100% - 16px);
-  //   left: 8px;
-  // }
 }
 
 .close .teem__info .teem__btn--hide {
@@ -216,11 +190,10 @@ tr.close.department {
   border-color: blueviolet;
 }
 
-.paid-day-first{
+.paid-day-first {
   border-radius: 5px 0 0 5px;
 }
 
-.paid-day-last{
+.paid-day-last {
   border-radius: 0 5px 5px 0;
 }
-

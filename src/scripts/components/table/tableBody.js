@@ -89,7 +89,7 @@ export default class TableBody extends TableComponent {
     });
   }
 
-  static getPaidDays(vacations) {
+  getPaidDays(vacations) {
     const paidDays = [];
     vacations.forEach((vacation) => {
       paidDays.push({
@@ -181,7 +181,7 @@ export default class TableBody extends TableComponent {
     }
   }
 
-  static createBorder(cells) {
+  createBorder(cells) {
     cells.forEach((cell) => {
       const container = document.createElement("div");
       container.classList.add("last-row__cell");
