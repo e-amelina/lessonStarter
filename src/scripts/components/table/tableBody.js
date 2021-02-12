@@ -48,7 +48,6 @@ export default class TableBody extends TableComponent {
     if (!memberNumber) {
       cell.append(this.fillCellInformationAboutTeem(teemData));
     } else {
-      // eslint-disable-next-line no-param-reassign
       cell.textContent = `${teemData.members[memberNumber - 1].name}`;
     }
 
