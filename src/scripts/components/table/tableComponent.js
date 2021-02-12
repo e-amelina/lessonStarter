@@ -58,7 +58,7 @@ export default class TableComponent extends Component {
         cell.classList.add("teem");
       } else if (dayNumber === this.countCells) {
         cell.classList.add("cell-sum");
-      } else if (Utils.hiddenDays(dayNumber, this.countDays, this.countCells)) {
+      } else if (Utils.hiddenDays(dayNumber - 1, this.countDays, this.countCells)) {
         cell.classList.add("hidden");
       } else {
         const date = new Date(this.year, this.month, dayNumber - 1);

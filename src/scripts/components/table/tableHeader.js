@@ -12,40 +12,39 @@ export default class TableHeader extends TableComponent {
     this.cells = [];
   }
 
-  update(month, year) {
+  update(month, year, countDays) {
+    super.removeHidden();
+
     this.cells.forEach((cell) => {
       cell.textContent = "";
     });
 
+    const weekends = this.getCells(".weekend");
+    weekends.forEach((weekend) => {
+      weekend.classList.remove("weekend");
+    });
+
     this.month = month;
     this.year = year;
+    this.countDays = countDays;
     this.fillDaysCells(this.cells);
-
-    // const weekends = this.getCells(".weekend");
-    // weekends.forEach((weekend) => {
-    //   weekend.classList.remove("weekend");
-    // });
-
-    super.removeHidden();
-    super.addHidden(this.cells);
   }
 
   fillDaysCells(daysCells) {
-    const button = document.createElement("BUTTON");
-    button.innerHTML = "&#10011; Add Vacation";
-
-    for (let cellNumber = 0; cellNumber < daysCells.length; cellNumber++) {
+    for (let cellNumber = 0; cellNumber < this.countCells; cellNumber++) {
       const currentDay = daysCells[cellNumber];
       if (!cellNumber) {
+        const button = document.createElement("BUTTON");
+        button.innerHTML = "&#10011; Add Vacation";
         currentDay.append(button);
         currentDay.classList.add("cell-button");
-      } else if (cellNumber === daysCells.length - 1) {
-        currentDay.textContent = "Sum";
-        currentDay.classList.add("cell-sum");
+      } else if (cellNumber === this.countCells - 1) {
+        if (currentDay) {
+          currentDay.textContent = "Sum";
+          currentDay.classList.add("cell-sum");
+        }
       } else if (Utils.hiddenDays(cellNumber, this.countDays, this.countCells)) {
-        currentDay.classList.add('hidden');
-      // } else if (!Utils.hiddenDays(cellNumber+1, this.countDays, this.countCells)){
-      //   currentDay.classList.remove('hidden');
+        currentDay.classList.add("hidden");
       } else {
         const date = new Date(this.year, this.month - 1, cellNumber);
         const contentCellDay = document.createElement("span");
