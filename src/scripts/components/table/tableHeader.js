@@ -53,6 +53,8 @@ export default class TableHeader extends TableComponent {
         contentCellDay.textContent = weekdayName;
         if (Utils.isWeekend(weekdayName)) {
           currentDay.classList.add("weekend");
+        } else {
+          currentDay.classList.remove("weekend");
         }
         currentDay.append(contentCellDay);
 

@@ -27,22 +27,21 @@ export default class TableBody extends TableComponent {
     this.deletePaidDays();
     this.addPaidDays();
 
-    for(let cell = 0; cell < this.cells.length; cell++) {
-        const rowCell = this.cells[cell];
+    for (let cell = 0; cell < this.cells.length; cell++) {
+      const rowCell = this.cells[cell];
 
-        for(let cellNumber = rowCell.length-1; cellNumber > this.countDays; cellNumber-- ) {
-            rowCell[cellNumber].classList.add("hidden");
-        }
+      for (let cellNumber = rowCell.length - 1; cellNumber > this.countDays; cellNumber--) {
+        rowCell[cellNumber].classList.add("hidden");
+      }
 
-        for(let cellN = 1; cellN < rowCell.length; cellN++) {
-            const date = new Date(this.year, this.month - 1, cellN);
-            const weekdayName = date.toLocaleDateString("en-US", { weekday: "short" });
-            if (Utils.isWeekend(weekdayName)) {
-                rowCell[cellN].classList.add("weekend");
-              }
+      for (let cellN = 1; cellN < rowCell.length; cellN++) {
+        const date = new Date(this.year, this.month - 1, cellN);
+        const weekdayName = date.toLocaleDateString("en-US", { weekday: "short" });
+        if (Utils.isWeekend(weekdayName)) {
+          rowCell[cellN].classList.add("weekend");
         }
+      }
     }
-
   }
 
   fillTeemCell(memberNumber, cell, teemData) {
@@ -72,6 +71,11 @@ export default class TableBody extends TableComponent {
         if (day.month === this.month) {
           for (let paidDay = day.startDay; paidDay <= day.endDay; paidDay++) {
             cells[paidDay].classList.add("paid-day");
+            if (paidDay === day.startDay) {
+              cells[paidDay].classList.add("paid-day-first");
+            } else if (paidDay === day.endDay) {
+              cells[paidDay].classList.add("paid-day-last");
+            }
           }
         }
       });
@@ -85,7 +89,7 @@ export default class TableBody extends TableComponent {
     });
   }
 
-  getPaidDays(vacations) {
+  static getPaidDays(vacations) {
     const paidDays = [];
     vacations.forEach((vacation) => {
       paidDays.push({
@@ -177,7 +181,7 @@ export default class TableBody extends TableComponent {
     }
   }
 
-  createBorder(cells) {
+  static createBorder(cells) {
     cells.forEach((cell) => {
       const container = document.createElement("div");
       container.classList.add("last-row__cell");

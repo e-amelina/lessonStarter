@@ -28,6 +28,7 @@
     "no-restricted-syntax": "off",
     "global-require": "off",
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+    "no-param-reassign": [2, { "props": false }],
     "unicorn/filename-case": [
       "off",
       {
